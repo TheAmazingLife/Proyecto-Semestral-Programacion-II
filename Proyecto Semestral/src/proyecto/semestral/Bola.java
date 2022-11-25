@@ -1,7 +1,6 @@
 /**
  * Clase que contiene propiedades de las bolas y ademas, se imprimen en la pantalla
  */
-
 package proyecto.semestral;
 
 import java.awt.*;
@@ -12,13 +11,13 @@ import javax.swing.JPanel;
  *
  * @author Pablo Sanhueza
  */
-abstract class Bola extends JPanel {
+abstract class Bola {
 
     private Color color;
-    private double x, y;
-    private double radio;
+    private int x, y;
+    private int radio;
 
-    public Bola(double x, double y, double radio, Color color) {
+    public Bola(int x, int y, int radio, Color color) {
         this.x = x;
         this.y = y;
         this.radio = radio;
@@ -46,18 +45,17 @@ abstract class Bola extends JPanel {
         this.color = ballColor;
     }
 
-    public void setX(Double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public void setY(Double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public void paint(Graphics2D g) {
+    public void paint(Graphics g) {
 
-        super.paint(g);
         g.setColor(color);
-        g.fillOval(0, 0, 100, 100);
+        g.fillOval(x, y, 2 * radio, 2 * radio);
     }
 }

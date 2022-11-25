@@ -1,24 +1,23 @@
-/**
- *  Menu que se encuentra debajo de la mesa de pool, util para visualizar score, bolas restantes y resetear la partida
- */
-
 package proyecto.semestral;
 
 import java.awt.*;
 import javax.swing.*;
 
 /**
+ * Menu que se encuentra debajo de la mesa de pool, util para visualizar score,
+ * bolas restantes y resetear la partida
  *
  * @author Pablo Sanhueza
  */
 public class Menu {
 
     private JPanel panel;
-
+    private DepositoBolas depositoBolas;
     private int menuPosX, menuPosY;
 
-    public Menu(JPanel panel, int posX, int posY) {
+    public Menu(int posX, int posY, JPanel panel) {
         this.panel = panel;
+       // this.depositoBolas = depositoBolas;
         menuPosX = posX;
         menuPosY = posY;
         mostrarPuntaje();

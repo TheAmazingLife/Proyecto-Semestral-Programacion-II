@@ -7,7 +7,6 @@ public class PanelSecundario extends JPanel {
 
     private JPanel panel;
     private Menu menu;
-
     private int posX, posY;
 
     public PanelSecundario(JFrame v) {
@@ -16,8 +15,7 @@ public class PanelSecundario extends JPanel {
         panel.setLayout(null);
         panel.setBounds(posX, posY, 1280, 40);
         panel.setBackground(Color.red);
-        menu = new Menu(panel, posX, posY);
-
+        menu = new Menu(posX, posY, panel); // COMO LLEGA HASTA ACÁ?
         v.getContentPane().add(panel);
     }
 

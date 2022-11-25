@@ -1,5 +1,6 @@
 package proyecto.semestral;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.*;
 
@@ -12,6 +13,7 @@ public class Ventana extends JFrame {
     public Ventana() {
         crearVentana();
         panel1 = new PanelPrincipal(this);
+        add(panel1);
         panel2 = new PanelSecundario(this);
     }
 

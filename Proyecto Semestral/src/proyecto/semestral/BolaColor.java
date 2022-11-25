@@ -1,11 +1,13 @@
 package proyecto.semestral;
 
+import java.awt.Color;
+
 /**
  * BolaColor
  */
-public class BolaColor extends Bola{
+public class BolaColor extends Bola {
 
-    public BolaColor(double x, double y, double radio) {
-        super(x, y, radio, Color.blue);
+    public BolaColor(int x, int y, int radio) {
+        super(x, y, radio, new Color((int)(Math.random() * 0x1000000)));
     }
 }

@@ -1,23 +1,29 @@
 package proyecto.semestral;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import javax.swing.*;
 
 public class PanelPrincipal extends JPanel {
 
-    private JPanel panel;
     private Jugar jugar;
     private int posX, posY;
+    private DepositoBolas depositoBolas;
 
     public PanelPrincipal(JFrame v) {
         setXY(0, 0);
-        panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(posX, posY, 1280, 640);
-        panel.setBackground(Color.green);
-        v.getContentPane().add(panel);
+        setLayout(null);
+        setBounds(posX, posY, 1280, 640);
+        setBackground(Color.green);
         jugar = new Jugar(v);
-        
+        depositoBolas = new DepositoBolas();
+        setBolas();
+    }
+
+    public void setBolas() {
+        for (int i = 0; i < jugar.getNumBolas(); i++) {
+            depositoBolas.addBola(jugar.getBolas(i));
+        }
     }
 
     private void setXY(int x, int y) {
@@ -31,5 +37,10 @@ public class PanelPrincipal extends JPanel {
 
     public int getY() {
         return posY;
+    }
+
+    public void paint(Graphics g) {
+        super.paint(g);
+        depositoBolas.paint(g);
     }
 }
