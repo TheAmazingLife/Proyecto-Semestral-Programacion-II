@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  *
  * @author Pablo Sanhueza
  */
-class Bola extends JPanel {
+abstract class Bola extends JPanel {
 
     private Color color;
     private double x, y;
@@ -60,5 +60,4 @@ class Bola extends JPanel {
         g.setColor(color);
         g.fillOval(0, 0, 100, 100);
     }
-
 }
