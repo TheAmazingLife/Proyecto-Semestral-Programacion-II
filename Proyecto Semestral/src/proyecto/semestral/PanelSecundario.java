@@ -1,16 +1,36 @@
-
 package proyecto.semestral;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.*;
 
-public class PanelSecundario {
-        private JPanel panel;
-    
-    public PanelSecundario(JFrame v){
+public class PanelSecundario extends JPanel {
+
+    private JPanel panel;
+    private Menu menu;
+
+    private int posX, posY;
+
+    public PanelSecundario(JFrame v) {
+        setXY(0, 640);
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBounds(0, 680, 1280, 40);
+        panel.setBounds(posX, posY, 1280, 40);
+        panel.setBackground(Color.red);
+        menu = new Menu(panel, posX, posY);
+
         v.getContentPane().add(panel);
+    }
+
+    private void setXY(int x, int y) {
+        posX = x;
+        posY = y;
+    }
+
+    public int getX() {
+        return posX;
+    }
+
+    public int getY() {
+        return posY;
     }
 }
