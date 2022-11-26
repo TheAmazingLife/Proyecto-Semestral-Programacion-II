@@ -9,6 +9,7 @@ import javax.swing.*;
  * pool
  *
  * @author Pablo Sanhueza
+ * @author Joaquin San Martin
  */
 public class Jugar {
 

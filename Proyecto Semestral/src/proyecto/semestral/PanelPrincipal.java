@@ -14,7 +14,7 @@ public class PanelPrincipal extends JPanel {
         setXY(0, 0);
         setLayout(null);
         setBounds(posX, posY, 1280, 640);
-        setBackground(Color.green);
+        setBackground(new Color(11, 122, 37));
         jugar = new Jugar(v);
         depositoBolas = new DepositoBolas();
         setBolas();
