@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 abstract class Bola {
 
     private Color color;
-    private int x, y;
-    private int radio;
+    protected int x, y;
+    protected int radio;
 
     public Bola(int x, int y, int radio, Color color) {
         this.x = x;
@@ -24,7 +24,6 @@ abstract class Bola {
         this.color = color;
     }
 
-    /*
     public double getX() {
         return x;
     }
@@ -32,8 +31,8 @@ abstract class Bola {
     public double getY() {
         return y;
     }
-     */
-    public double getRadio() {
+
+    public int getRadio() {
         return radio;
     }
 

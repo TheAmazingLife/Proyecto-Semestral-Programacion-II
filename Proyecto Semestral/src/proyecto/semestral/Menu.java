@@ -2,6 +2,7 @@ package proyecto.semestral;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
 /**
  * Menu que se encuentra debajo de la mesa de pool, util para visualizar score,
@@ -15,11 +16,14 @@ public class Menu {
     private DepositoBolas depositoBolas;
     private int menuPosX, menuPosY;
 
+    ActionListener botonResetAl;
+
     public Menu(int posX, int posY, JPanel panel) {
         this.panel = panel;
        // this.depositoBolas = depositoBolas;
         menuPosX = posX;
         menuPosY = posY;
+        iniciarEscuchadores();
         mostrarPuntaje();
         mostrarReset();
         mostrarNumeroBolas();
@@ -43,6 +47,11 @@ public class Menu {
         panel.add(bolas);
     }
 
+    
+    /**
+     * mostrarReset()
+     * Mostrar boton reset y funcionalidad de boton
+     */
     private void mostrarReset() {
         JButton botonReset = new JButton("RESET");
         botonReset.setBounds(menuPosX + 800, menuPosY + 5, 80, 30);
@@ -51,7 +60,19 @@ public class Menu {
         botonReset.setEnabled(true); // si es false, el boton esta "apagado"
         botonReset.setMnemonic('r'); // la tecla funciona con alt + letra
 
+        botonReset.addActionListener(botonResetAl);
+
         panel.add(botonReset);
     }
 
+    public void iniciarEscuchadores() {
+
+        
+
+        botonResetAl = new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                System.out.println("hola pablo");
+            }
+        };
+    }
 }
