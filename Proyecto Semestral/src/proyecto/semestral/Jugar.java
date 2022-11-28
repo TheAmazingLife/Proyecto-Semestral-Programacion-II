@@ -35,6 +35,8 @@ public class Jugar {
             BolaColor bolaAux = new BolaColor((int) (Math.random() * 1280), (int) (Math.random() * 640), 10);
             listaBolas.add(bolaAux);
         }
+        //BolaBlanca bolaAux = new BolaBlanca((int) (Math.random() * 1280), (int) (Math.random() * 640), 10);
+        //listaBolas.add(bolaAux);
     }
 
     public void paint(Graphics g) {

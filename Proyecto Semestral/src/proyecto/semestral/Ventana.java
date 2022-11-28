@@ -2,9 +2,11 @@ package proyecto.semestral;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 
-public class Ventana extends JFrame {
+public class Ventana extends JFrame implements KeyListener {
 
     private PanelPrincipal panel1;
     private PanelPrincipal panel3;
@@ -15,6 +17,7 @@ public class Ventana extends JFrame {
         panel1 = new PanelPrincipal(this);
         add(panel1);
         panel2 = new PanelSecundario(this);
+        addKeyListener(this);
     }
 
     public void crearVentana() {
@@ -26,5 +29,18 @@ public class Ventana extends JFrame {
         setLocationRelativeTo(null);
         ImageIcon iconoVentana = new ImageIcon(this.getClass().getResource("/recursos/icono.png"));
         this.setIconImage(iconoVentana.getImage()); // set iconoVentana como el icono de Ventana
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        panel1.modificarAngulo(e.getKeyCode());
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
