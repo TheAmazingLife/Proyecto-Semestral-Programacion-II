@@ -14,14 +14,20 @@ import javax.swing.JPanel;
 abstract class Bola {
 
     private Color color;
+    private Velocidad velocidad;
     protected int x, y;
     protected int radio;
 
     public Bola(int x, int y, int radio, Color color) {
+        velocidad = new Velocidad();
         this.x = x;
         this.y = y;
         this.radio = radio;
         this.color = color;
+    }
+
+    public Velocidad getVelocidad() {
+        return velocidad;
     }
 
     public double getX() {

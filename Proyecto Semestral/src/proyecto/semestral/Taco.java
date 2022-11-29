@@ -36,8 +36,8 @@ public class Taco {
         poligono = new Polygon();
         int x1 = (int) (bolaBlanca.getCentro().getX() + (bolaBlanca.getRadio() + 5) * cos(Math.toRadians(angulo)));
         int y1 = (int) (bolaBlanca.getCentro().getY() + (bolaBlanca.getRadio() + 5) * sin(Math.toRadians(angulo)));
-        int x2 = (int) (bolaBlanca.getCentro().getX() + (bolaBlanca.getRadio() + 100) * cos(Math.toRadians(angulo)));
-        int y2 = (int) (bolaBlanca.getCentro().getY() + (bolaBlanca.getRadio() + 100) * sin(Math.toRadians(angulo)));
+        int x2 = (int) (bolaBlanca.getCentro().getX() + (bolaBlanca.getRadio() + 150) * cos(Math.toRadians(angulo)));
+        int y2 = (int) (bolaBlanca.getCentro().getY() + (bolaBlanca.getRadio() + 150) * sin(Math.toRadians(angulo)));
         poligono.addPoint(x1, y1);
         poligono.addPoint(x2, y2);
         System.out.println("Bola blanca: (" + bolaBlanca.getCentro().getX() + ", " + bolaBlanca.getCentro().getY() + " )");
