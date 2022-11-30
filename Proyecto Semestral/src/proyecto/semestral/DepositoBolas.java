@@ -4,27 +4,45 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
- *
- * @author Pablo Sanhueza
+ * Clase contenedora de las Bolas en el tablero, almacena, indica tamanio y
+ * pinta
  */
 public class DepositoBolas {
 
     private ArrayList<Bola> depositoBolas;
 
+    /**
+     * Constructor del deposito de bolas
+     */
     public DepositoBolas() {
         depositoBolas = new ArrayList<Bola>();
     }
 
+    /**
+     * Agrega una bola a depositoBolas
+     * 
+     * @param bola recibe la bola para anadirla al arreglo depositoBolas
+     */
     public void addBola(Bola bola) {
         depositoBolas.add(bola);
     }
 
+    /**
+     * Retorna el tamanio del deposito para saber la canditad de bolas existentes
+     * 
+     * @return Tamanio del deposito (la cantidad de bolas)
+     */
     public int size() {
         return depositoBolas.size();
     }
 
+    /**
+     * Pinta todas las bolas existentes en el depositoBolas
+     * 
+     * @param g recibe la grafica g
+     */
     public void paint(Graphics g) {
-        System.out.println(depositoBolas.size());
+        System.out.println(depositoBolas.size()); // Indicador de la cantidad de bolas en pantalla
         for (int i = 0; i < depositoBolas.size(); i++) {
             depositoBolas.get(i).paint(g);
         }
