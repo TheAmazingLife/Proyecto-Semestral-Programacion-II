@@ -6,7 +6,6 @@ import static java.lang.Math.*;
  * Cada bola debe tener una velocidad asociada, esta define si posee o no
  * movimiento
  *
- * @author Pablo Sanhueza
  */
 public class Velocidad {
 

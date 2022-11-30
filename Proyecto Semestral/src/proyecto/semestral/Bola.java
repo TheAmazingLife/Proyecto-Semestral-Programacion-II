@@ -36,6 +36,11 @@ abstract class Bola {
         return velocidad;
     }
 
+    /**
+     * Obtiene la "x" de la bola
+     * 
+     * @return posicion "x" de la bola
+     */
     public double getX() {
         return x;
     }
@@ -100,6 +105,7 @@ abstract class Bola {
      * @param g recibe la grafica g
      */
     // ? Asigna el color de manera correcta?
+    // ? Metodo abstracto paint?
     public void paint(Graphics g) {
         g.setColor(color);
         g.fillOval(x, y, 2 * radio, 2 * radio);

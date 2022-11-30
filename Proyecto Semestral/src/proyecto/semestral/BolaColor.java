@@ -9,6 +9,7 @@ import java.awt.Color;
 public class BolaColor extends Bola {
     // ? Posible asignacion de color, mediante colores previamente asignados en un
     // ? arreglo, esto evitaria el posible color Blanco
+    // TODO: limitar con rango, excluir claras
     /**
      * Constructor de BolaColor, llama al constructor de Bola y asigna un color
      * aleatorio

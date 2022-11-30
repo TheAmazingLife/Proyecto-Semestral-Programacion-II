@@ -27,6 +27,14 @@ public class DepositoBolas {
         depositoBolas.add(bola);
     }
 
+    // TODO: eliminar bola del arreglo
+    /**
+     * Elimina la bola del depositoBolas
+     */
+    public void eliminarBola() {
+        // TODO
+    }
+
     /**
      * Retorna el tamanio del deposito para saber la canditad de bolas existentes
      * 
