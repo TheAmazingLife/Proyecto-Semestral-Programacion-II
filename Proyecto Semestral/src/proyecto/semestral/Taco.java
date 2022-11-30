@@ -17,14 +17,13 @@ public class Taco {
     // determina si el taco es visible, si se golpea la bola blanca, debe
     // desaparecer el taco
     // private boolean dibujarTaco;
-
     // TODO: Hacer un constructor vacio, que solo se le asigne una bola y que llame
     // * actualizar taco, no es buena practica tener un constructor tan complejo
     // ? Mas efectivo constructor vacio, y solo llamar a actualizar taco
     /**
      * Constructor del taco, lo posiciona en referencia a la bola blanca
-     * 
-     * @param angulo     Angulo en grados de el taco
+     *
+     * @param angulo Angulo en grados de el taco
      * @param bolaBlanca Bola blanca en cual ocupar de referencia
      */
     public Taco(int angulo, BolaBlanca bolaBlanca) {
@@ -39,7 +38,7 @@ public class Taco {
      * jugador
      *
      * @param angulo angulo en grados sexagesimales que varía según el jugardor
-     *               presione las teclas
+     * presione las teclas
      */
     public void actualizarTaco(int angulo) {
         System.out.println("ANGULO: " + angulo * 180 / PI);
@@ -60,7 +59,7 @@ public class Taco {
 
     /**
      * Pinta el taco dibujando una linea poligonal
-     * 
+     *
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {

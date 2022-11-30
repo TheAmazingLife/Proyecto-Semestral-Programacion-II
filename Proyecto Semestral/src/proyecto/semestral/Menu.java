@@ -19,9 +19,9 @@ public class Menu {
 
     /**
      * Constructor de la barrInferior, asigna su panel y define su posicion x,y
-     * 
-     * @param posX  define la "x" del panel
-     * @param posY  define la "y" del panel
+     *
+     * @param posX define la "x" del panel
+     * @param posY define la "y" del panel
      * @param panel define el panel correspondiente
      */
     public Menu(int posX, int posY, JPanel panel) {

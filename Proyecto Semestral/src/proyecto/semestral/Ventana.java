@@ -37,7 +37,7 @@ public class Ventana extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        panel1.modificarAngulo(e.getKeyCode());
+        panel1.jugar.modificarAngulo(e.getKeyCode());
     }
 
     @Override

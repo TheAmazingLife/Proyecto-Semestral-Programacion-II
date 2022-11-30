@@ -20,7 +20,7 @@ public class DepositoBolas {
 
     /**
      * Agrega una bola a depositoBolas
-     * 
+     *
      * @param bola recibe la bola para anadirla al arreglo depositoBolas
      */
     public void addBola(Bola bola) {
@@ -36,8 +36,9 @@ public class DepositoBolas {
     }
 
     /**
-     * Retorna el tamanio del deposito para saber la canditad de bolas existentes
-     * 
+     * Retorna el tamanio del deposito para saber la canditad de bolas
+     * existentes
+     *
      * @return Tamanio del deposito (la cantidad de bolas)
      */
     public int size() {
@@ -46,7 +47,7 @@ public class DepositoBolas {
 
     /**
      * Pinta todas las bolas existentes en el depositoBolas
-     * 
+     *
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {

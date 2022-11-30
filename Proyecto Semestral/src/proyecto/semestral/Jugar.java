@@ -1,7 +1,6 @@
 package proyecto.semestral;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
+import java.awt.*;
 import javax.swing.*;
 
 /**
@@ -10,71 +9,86 @@ import javax.swing.*;
  *
  */
 public class Jugar {
-    // ! Usar DepositoBolas en vez de un arreglo de bolas, metodos redundatnes
-    private ArrayList<Bola> listaBolas; // ? atributo dudoso
+
+    private int radio;
+    private int angulo;
     private int numeroInicialBolas;
+    private JPanel panel;
+    private DepositoBolas depositoBolas;
+    private BolaBlanca bolaBlanca;
+    private Taco taco;
+    private ConjuntoTroneras conjuntoTroneras;
 
     // ! Mejorar estructura del programa, ideal tener una mesa e iniciar juego
     // ! (pintar bolas, movimiento etc)
     /**
      * Constructor recibe la ventana e inicializa las bolas
-     * 
-     * @param ventana Recibe la ventana en la cual mostrarse
+     *
+     * @param panel Recibe el panel en la cual mostrarse
      */
-    public Jugar(JFrame ventana) {
-        listaBolas = new ArrayList<Bola>();
+    public Jugar(JPanel panel) {
+        radio = 10;
+        angulo = 0;
         numeroInicialBolas = 12;
-        reiniciarBolas();
+        this.panel = panel;
+        depositoBolas = new DepositoBolas();
+        resetBolaBlanca();
+        taco = new Taco(angulo, bolaBlanca);
+        conjuntoTroneras = new ConjuntoTroneras();
+        inciarBolas();
     }
 
-    /**
-     * Recibe un i y retorna la bola en esa i-esima posicion
-     * 
-     * @param i posicion de bola solicitada
-     * @return la bola ubicada en la i-esima posicion
-     */
-    public Bola getBolas(int i) {
-        return listaBolas.get(i);
+    public void resetBolaBlanca() {
+        int posXBolaBlanca = (int) (Math.random() * 1280);
+        int posYBolaBlanca = (int) (Math.random() * 640);
+        bolaBlanca = new BolaBlanca(posXBolaBlanca, posYBolaBlanca, radio);
     }
 
     /**
      * Retorna el numero de bolas en la mesa
-     * 
+     *
      * @return tamanio del arreglo, es decir las bolas en la mesa
      */
     public int getNumBolas() {
-        return listaBolas.size();
+        return depositoBolas.size();
     }
 
-    // ? Agrega las bolas a un arreglo, posible mejora ocupando DepositoBolas
-    // ! asignacion confusa.
-    // ! nombre confuso, asignar nombre adecuado, posiblemente iniciarBolas, ya que
-    // ! puede ser llamado mas de una vez.
     // TODO: limitar posiciones de la generacion de bolas (limitar x e y)
-    // ! Reemplazar por DepositoBolas, para facilidad de pintado
     /**
      * Inicia las bolas, generando bolas en posiciones randomicas, establece su
      * radio y las agrega a la lista de bolas
      */
-    public void reiniciarBolas() {
+    public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
             BolaColor bolaAux = new BolaColor((int) (Math.random() * 1280), (int) (Math.random() * 640), 10);
-            listaBolas.add(bolaAux);
+            depositoBolas.addBola(bolaAux);
         }
-        // BolaBlanca bolaAux = new BolaBlanca((int) (Math.random() * 1280), (int)
-        // (Math.random() * 640), 10);
-        // listaBolas.add(bolaAux);
     }
 
-    // ! Metodo redundante, mejor tener DepositoBolas y llamar su metodo paint
     /**
-     * Pinta todas las bolas existentes en la lista de bolas
-     * 
+     * Pinta todos los elementos de una partida
+     *
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {
-        for (int i = 0; i < listaBolas.size(); i++) {
-            listaBolas.get(i).paint(g);
+        depositoBolas.paint(g);
+        bolaBlanca.paint(g);
+        taco.paint(g);
+        conjuntoTroneras.paint(g);
+    }
+
+    public void modificarAngulo(int tecla) {
+        switch (tecla) {
+            case 37:
+                System.out.println("izq");
+                angulo--;
+                break;
+            case 39:
+                System.out.println("der");
+                angulo++;
+                break;
         }
+        taco.actualizarTaco(angulo);
+        panel.repaint();
     }
 }
