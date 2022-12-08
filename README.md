@@ -10,7 +10,7 @@ Repositorio Proyecto S  emestral de la asignatura Programacion 2 S2-22 de la car
 
 ## Grafico UML
 
-![UML](Recursos/GraficoUML.png)
+![UML](UML.png)
 
 ## Autores
 
