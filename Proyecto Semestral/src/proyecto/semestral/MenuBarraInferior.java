@@ -9,7 +9,7 @@ import java.awt.event.*;
  * Menu que se encuentra debajo de la mesa de pool, util para visualizar score,
  * bolas restantes y resetear la partida
  */
-public class Menu {
+public class MenuBarraInferior {
 
     private JPanel panel;
     //private DepositoBolas depositoBolas; // ! atributo no necesario, se puede obtene
@@ -24,7 +24,7 @@ public class Menu {
      * @param posY define la "y" del panel
      * @param panel define el panel correspondiente
      */
-    public Menu(int posX, int posY, JPanel panel) {
+    public MenuBarraInferior(int posX, int posY, JPanel panel) {
         this.panel = panel;
         // this.depositoBolas = depositoBolas; // ! En desuso
         menuPosX = posX;

@@ -27,7 +27,7 @@ public class Jugar {
      * @param panel Recibe el panel en la cual mostrarse
      */
     public Jugar(JPanel panel) {
-        radio = 10;
+        radio = 20;
         angulo = 0;
         numeroInicialBolas = 12;
         this.panel = panel;
@@ -38,9 +38,12 @@ public class Jugar {
         inciarBolas();
     }
 
+    /**
+     * La bola blanca aparece en una posicion randomica
+     */
     public void resetBolaBlanca() {
-        int posXBolaBlanca = (int) (Math.random() * 1280);
-        int posYBolaBlanca = (int) (Math.random() * 640);
+        float posXBolaBlanca = (float) (Math.random() * 1280);
+        float posYBolaBlanca = (float) (Math.random() * 640);
         bolaBlanca = new BolaBlanca(posXBolaBlanca, posYBolaBlanca, radio);
     }
 
@@ -56,13 +59,92 @@ public class Jugar {
     // TODO: limitar posiciones de la generacion de bolas (limitar x e y)
     /**
      * Inicia las bolas, generando bolas en posiciones randomicas, establece su
-     * radio y las agrega a la lista de bolas
+     * radio y las agrega a la lista de bolas.
      */
     public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
-            BolaColor bolaAux = new BolaColor((int) (Math.random() * 1280), (int) (Math.random() * 640), 10);
-            depositoBolas.addBola(bolaAux);
+            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * 1200) + 30, (int) (Math.random() * 600) + 20, radio);
+
+            // no permitir que aparezca "una bola encima de otra"
+            for (int j = 0; j < depositoBolas.size(); j++) {
+                BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
+                if (bolaAux1 != bolaAux2) {
+                    if (bolaAux1.hayColision(bolaAux2)) {
+                        bolaAux1.descolisionar(bolaAux2);
+                    }
+                }
+            }
+
+            // Una vez la bola tenga una posicion adecuada, se agrega al deposito
+            depositoBolas.addBola(bolaAux1);
         }
+    }
+
+    /**
+     * Son las opciones que tiene el usuario para realizar Estas son: Cambiar el
+     * angulo del taco (moverse de "izquierda a derecha") Golpear la bola blanca
+     *
+     * @param tecla: corresponde a la opcion elegida por el usuario
+     */
+    public void interaccion(int tecla) {
+
+        switch (tecla) {
+            case 32:
+                golpearBola();
+                System.out.println("spc");
+                break;
+            case 37:
+                System.out.println("izq");
+                angulo--;
+                break;
+            case 39:
+                System.out.println("der");
+                angulo++;
+                break;
+        }
+        taco.actualizarTaco(angulo);
+        panel.repaint();
+    }
+
+    /**
+     * Golpea la bola blanca, se le asigna una velocidad
+     */
+    public void golpearBola() {
+        Velocidad vel = new Velocidad(taco.getX2() - taco.getX1(), taco.getY2() - taco.getY1());
+        vel.escalar(-0.25f);
+        bolaBlanca.setVelocidad(vel);
+    }
+
+    /**
+     * Interaccion entre todas las bolas, tanto de color como la blanca. Esta
+     * interaccion corresponde a verificar si estan colisionando, lo que provoca
+     * dicha colision
+     */
+    public void moverse() {
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            Bola b1 = depositoBolas.get(i);
+
+            b1.mover();
+            bolaBlanca.mover();
+
+            // hace lectura de todas las posibles colisiones
+            for (int j = 0; j < depositoBolas.size(); j++) {
+                if (i == j) {
+                    continue;
+                }
+
+                Bola b2 = depositoBolas.get(j);
+
+                if (b1.hayColision(b2)) {
+                    b1.colisionar(b2);
+                }
+                if (bolaBlanca.hayColision(b2)) {
+                    bolaBlanca.colisionar(b2);
+                }
+            }
+        }
+        taco.actualizarTaco(angulo);
+        panel.repaint();
     }
 
     /**
@@ -77,18 +159,4 @@ public class Jugar {
         conjuntoTroneras.paint(g);
     }
 
-    public void modificarAngulo(int tecla) {
-        switch (tecla) {
-            case 37:
-                System.out.println("izq");
-                angulo--;
-                break;
-            case 39:
-                System.out.println("der");
-                angulo++;
-                break;
-        }
-        taco.actualizarTaco(angulo);
-        panel.repaint();
-    }
 }

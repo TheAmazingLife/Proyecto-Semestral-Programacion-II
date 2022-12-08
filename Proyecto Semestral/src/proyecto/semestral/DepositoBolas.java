@@ -27,6 +27,15 @@ public class DepositoBolas {
         depositoBolas.add(bola);
     }
 
+    /**
+     * Retorna una bola en especifico del deposito de Bolas
+     *
+     * @param i la i-esima bola a retornar
+     */
+    public Bola get(int i) {
+        return depositoBolas.get(i);
+    }
+
     // TODO: eliminar bola del arreglo
     /**
      * Elimina la bola del depositoBolas
