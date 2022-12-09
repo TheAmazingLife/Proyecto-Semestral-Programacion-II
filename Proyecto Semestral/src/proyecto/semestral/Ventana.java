@@ -1,15 +1,11 @@
 package proyecto.semestral;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class Ventana extends JFrame implements KeyListener {
 
     private PanelPrincipal panel1;
-    private PanelPrincipal panel3;
     private PanelSecundario panel2;
 
     public Ventana() {
@@ -37,10 +33,12 @@ public class Ventana extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        panel1.modificarAngulo(e.getKeyCode());
+        panel1.jugar.interaccion(e.getKeyCode());
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
 }

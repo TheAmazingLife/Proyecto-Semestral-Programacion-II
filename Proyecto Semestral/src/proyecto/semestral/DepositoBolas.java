@@ -20,7 +20,7 @@ public class DepositoBolas {
 
     /**
      * Agrega una bola a depositoBolas
-     * 
+     *
      * @param bola recibe la bola para anadirla al arreglo depositoBolas
      */
     public void addBola(Bola bola) {
@@ -28,8 +28,26 @@ public class DepositoBolas {
     }
 
     /**
-     * Retorna el tamanio del deposito para saber la canditad de bolas existentes
-     * 
+     * Retorna una bola en especifico del deposito de Bolas
+     *
+     * @param i la i-esima bola a retornar
+     */
+    public Bola get(int i) {
+        return depositoBolas.get(i);
+    }
+
+    // TODO: eliminar bola del arreglo
+    /**
+     * Elimina la bola del depositoBolas
+     */
+    public void eliminarBola() {
+        // TODO
+    }
+
+    /**
+     * Retorna el tamanio del deposito para saber la canditad de bolas
+     * existentes
+     *
      * @return Tamanio del deposito (la cantidad de bolas)
      */
     public int size() {
@@ -38,7 +56,7 @@ public class DepositoBolas {
 
     /**
      * Pinta todas las bolas existentes en el depositoBolas
-     * 
+     *
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {

@@ -1,7 +1,6 @@
 package proyecto.semestral;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
+import java.awt.*;
 import javax.swing.*;
 
 /**
@@ -10,71 +9,154 @@ import javax.swing.*;
  *
  */
 public class Jugar {
-    // ! Usar DepositoBolas en vez de un arreglo de bolas, metodos redundatnes
-    private ArrayList<Bola> listaBolas; // ? atributo dudoso
+
+    private int radio;
+    private int angulo;
     private int numeroInicialBolas;
+    private JPanel panel;
+    private DepositoBolas depositoBolas;
+    private BolaBlanca bolaBlanca;
+    private Taco taco;
+    private ConjuntoTroneras conjuntoTroneras;
 
     // ! Mejorar estructura del programa, ideal tener una mesa e iniciar juego
     // ! (pintar bolas, movimiento etc)
     /**
      * Constructor recibe la ventana e inicializa las bolas
-     * 
-     * @param ventana Recibe la ventana en la cual mostrarse
+     *
+     * @param panel Recibe el panel en la cual mostrarse
      */
-    public Jugar(JFrame ventana) {
-        listaBolas = new ArrayList<Bola>();
+    public Jugar(JPanel panel) {
+        radio = 20;
+        angulo = 0;
         numeroInicialBolas = 12;
-        reiniciarBolas();
+        this.panel = panel;
+        depositoBolas = new DepositoBolas();
+        resetBolaBlanca();
+        taco = new Taco(angulo, bolaBlanca);
+        conjuntoTroneras = new ConjuntoTroneras();
+        inciarBolas();
     }
 
     /**
-     * Recibe un i y retorna la bola en esa i-esima posicion
-     * 
-     * @param i posicion de bola solicitada
-     * @return la bola ubicada en la i-esima posicion
+     * La bola blanca aparece en una posicion randomica
      */
-    public Bola getBolas(int i) {
-        return listaBolas.get(i);
+    public void resetBolaBlanca() {
+        float posXBolaBlanca = (float) (Math.random() * 1280);
+        float posYBolaBlanca = (float) (Math.random() * 640);
+        bolaBlanca = new BolaBlanca(posXBolaBlanca, posYBolaBlanca, radio);
     }
 
     /**
      * Retorna el numero de bolas en la mesa
-     * 
+     *
      * @return tamanio del arreglo, es decir las bolas en la mesa
      */
     public int getNumBolas() {
-        return listaBolas.size();
+        return depositoBolas.size();
     }
 
-    // ? Agrega las bolas a un arreglo, posible mejora ocupando DepositoBolas
-    // ! asignacion confusa.
-    // ! nombre confuso, asignar nombre adecuado, posiblemente iniciarBolas, ya que
-    // ! puede ser llamado mas de una vez.
     // TODO: limitar posiciones de la generacion de bolas (limitar x e y)
-    // ! Reemplazar por DepositoBolas, para facilidad de pintado
     /**
      * Inicia las bolas, generando bolas en posiciones randomicas, establece su
-     * radio y las agrega a la lista de bolas
+     * radio y las agrega a la lista de bolas.
      */
-    public void reiniciarBolas() {
+    public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
-            BolaColor bolaAux = new BolaColor((int) (Math.random() * 1280), (int) (Math.random() * 640), 10);
-            listaBolas.add(bolaAux);
+            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * 1200) + 30, (int) (Math.random() * 600) + 20, radio);
+
+            // no permitir que aparezca "una bola encima de otra"
+            for (int j = 0; j < depositoBolas.size(); j++) {
+                BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
+                if (bolaAux1 != bolaAux2) {
+                    if (bolaAux1.hayColision(bolaAux2)) {
+                        bolaAux1.descolisionar(bolaAux2);
+                    }
+                }
+            }
+
+            // Una vez la bola tenga una posicion adecuada, se agrega al deposito
+            depositoBolas.addBola(bolaAux1);
         }
-        // BolaBlanca bolaAux = new BolaBlanca((int) (Math.random() * 1280), (int)
-        // (Math.random() * 640), 10);
-        // listaBolas.add(bolaAux);
     }
 
-    // ! Metodo redundante, mejor tener DepositoBolas y llamar su metodo paint
     /**
-     * Pinta todas las bolas existentes en la lista de bolas
-     * 
+     * Son las opciones que tiene el usuario para realizar Estas son: Cambiar el
+     * angulo del taco (moverse de "izquierda a derecha") Golpear la bola blanca
+     *
+     * @param tecla: corresponde a la opcion elegida por el usuario
+     */
+    public void interaccion(int tecla) {
+
+        switch (tecla) {
+            case 32:
+                golpearBola();
+                System.out.println("spc");
+                break;
+            case 37:
+                System.out.println("izq");
+                angulo--;
+                break;
+            case 39:
+                System.out.println("der");
+                angulo++;
+                break;
+        }
+        taco.actualizarTaco(angulo);
+        panel.repaint();
+    }
+
+    /**
+     * Golpea la bola blanca, se le asigna una velocidad
+     */
+    public void golpearBola() {
+        Velocidad vel = new Velocidad(taco.getX2() - taco.getX1(), taco.getY2() - taco.getY1());
+        vel.escalar(-0.25f);
+        bolaBlanca.setVelocidad(vel);
+    }
+
+    /**
+     * Interaccion entre todas las bolas, tanto de color como la blanca. Esta
+     * interaccion corresponde a verificar si estan colisionando, lo que provoca
+     * dicha colision
+     */
+    public void moverse() {
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            Bola b1 = depositoBolas.get(i);
+
+            b1.mover();
+            bolaBlanca.mover();
+
+            // hace lectura de todas las posibles colisiones
+            for (int j = 0; j < depositoBolas.size(); j++) {
+                if (i == j) {
+                    continue;
+                }
+
+                Bola b2 = depositoBolas.get(j);
+
+                if (b1.hayColision(b2)) {
+                    b1.colisionar(b2);
+                }
+                if (bolaBlanca.hayColision(b2)) {
+                    bolaBlanca.colisionar(b2);
+                }
+            }
+        }
+        taco.actualizarTaco(angulo);
+        panel.repaint();
+    }
+
+    /**
+     * Pinta todos los elementos de una partida
+     *
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {
-        for (int i = 0; i < listaBolas.size(); i++) {
-            listaBolas.get(i).paint(g);
-        }
+        depositoBolas.paint(g);
+        bolaBlanca.paint(g);
+        taco.paint(g);
+        conjuntoTroneras.paint(g);
     }
+
 }

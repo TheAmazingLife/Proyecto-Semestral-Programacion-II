@@ -6,7 +6,7 @@ import javax.swing.*;
 public class PanelSecundario extends JPanel {
 
     private JPanel panel;
-    private Menu menu;
+    private MenuBarraInferior menu;
     private int posX, posY;
 
     // TODO: mejorar el contructor, solo llamando crear ventana una vez por singleton
@@ -16,7 +16,7 @@ public class PanelSecundario extends JPanel {
         panel.setLayout(null);
         panel.setBounds(posX, posY, 1280, 40);
         panel.setBackground(Color.red);
-        menu = new Menu(posX, posY, panel); // ! COMO LLEGA HASTA ACÁ?
+        menu = new MenuBarraInferior(posX, posY, panel); // ! COMO LLEGA HASTA ACÁ?
         v.getContentPane().add(panel);
     }
 
