@@ -2,20 +2,20 @@ package proyecto.semestral;
 
 /**
  * Cada bola debe tener una velocidad asociada, esta define si posee o no
- * movimiento
+ * movimiento.
  *
  */
-public class Velocidad {
+public class Vector {
 
     public float x;
     public float y;
 
-    public Velocidad(float x, float y) {
+    public Vector(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public static float punto(Velocidad a, Velocidad b) {
+    public static float punto(Vector a, Vector b) {
         return a.x * b.x + a.y * b.y;
     }
 

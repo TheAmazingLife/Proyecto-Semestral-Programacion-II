@@ -86,7 +86,7 @@ public class MenuBarraInferior {
     public void iniciarEscuchadores() {
         botonResetAl = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("hola pablo"); // TODO: Hacer que reinicie el juego
+                //System.out.println("hola pablo"); // TODO: Hacer que reinicie el juego
             }
         };
     }
