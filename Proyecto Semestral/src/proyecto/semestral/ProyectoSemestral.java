@@ -10,7 +10,8 @@ package proyecto.semestral;
 public class ProyectoSemestral {
 
     public static void main(String[] args) {
-        Ventana v = new Ventana();
+        //Ventana v = new Ventana();
+        MenuInicial v = new MenuInicial();
         v.setVisible(true);
     }
 }
