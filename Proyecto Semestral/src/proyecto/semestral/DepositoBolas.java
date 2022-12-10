@@ -60,7 +60,7 @@ public class DepositoBolas {
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {
-        System.out.println(depositoBolas.size()); // Indicador de la cantidad de bolas en pantalla
+        //System.out.println(depositoBolas.size()); // Indicador de la cantidad de bolas en pantalla
         for (int i = 0; i < depositoBolas.size(); i++) {
             depositoBolas.get(i).paint(g);
         }

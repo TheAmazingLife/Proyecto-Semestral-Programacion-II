@@ -48,7 +48,6 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("MOVERSE");
         jugar.moverse();
     }
 }

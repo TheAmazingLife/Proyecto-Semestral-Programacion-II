@@ -1,5 +1,6 @@
 package proyecto.semestral;
 
+import geometricas.RellenaConPuntos;
 import java.awt.*;
 import javax.swing.*;
 
@@ -17,6 +18,11 @@ public class Jugar {
     private DepositoBolas depositoBolas;
     private BolaBlanca bolaBlanca;
     private Taco taco;
+    private Polygon paredSuperior;
+    private Polygon paredInferior;
+    private Polygon paredIzquierda;
+    private Polygon paredDerecha;
+
     private ConjuntoTroneras conjuntoTroneras;
 
     // ! Mejorar estructura del programa, ideal tener una mesa e iniciar juego
@@ -36,6 +42,12 @@ public class Jugar {
         taco = new Taco(angulo, bolaBlanca);
         conjuntoTroneras = new ConjuntoTroneras();
         inciarBolas();
+        paredSuperior = new Polygon();
+        paredInferior = new Polygon();
+        paredIzquierda = new Polygon();
+        paredDerecha = new Polygon();
+
+        crearContornosMesa();
     }
 
     /**
@@ -91,14 +103,11 @@ public class Jugar {
         switch (tecla) {
             case 32:
                 golpearBola();
-                System.out.println("spc");
                 break;
             case 37:
-                System.out.println("izq");
                 angulo--;
                 break;
             case 39:
-                System.out.println("der");
                 angulo++;
                 break;
         }
@@ -110,17 +119,30 @@ public class Jugar {
      * Golpea la bola blanca, se le asigna una velocidad
      */
     public void golpearBola() {
-        Velocidad vel = new Velocidad(taco.getX2() - taco.getX1(), taco.getY2() - taco.getY1());
-        vel.escalar(-0.25f);
-        bolaBlanca.setVelocidad(vel);
+        if (bolaBlanca.vx == 0 && bolaBlanca.vy == 0) {
+            bolaBlanca.vx = -5;
+            bolaBlanca.vy = 0;
+        } else {
+            System.out.println("La bola blanca sigue en movimiento");
+        }
     }
 
     /**
      * Interaccion entre todas las bolas, tanto de color como la blanca. Esta
-     * interaccion corresponde a verificar si estan colisionando, lo que provoca
-     * dicha colision
+     * interaccion corresponde a verificar si estan colisionando, y lo que
+     * provoca dicha colision
      */
     public void moverse() {
+        bolaBlanca.mover();
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            depositoBolas.get(i).mover();
+        }
+        for (int i = 0; i < depositoBolas.size() - 1; i++) {
+            Bola.colisionar(bolaBlanca, depositoBolas.get(i));
+            for (int j = i + 1; j < depositoBolas.size(); j++) {
+                Bola.colisionar(depositoBolas.get(i), depositoBolas.get(j));
+            }
+        }/*
         for (int i = 0; i < depositoBolas.size(); i++) {
             Bola b1 = depositoBolas.get(i);
 
@@ -135,16 +157,29 @@ public class Jugar {
 
                 Bola b2 = depositoBolas.get(j);
 
-                if (b1.hayColision(b2)) {
-                    b1.colisionar(b2);
-                }
-                if (bolaBlanca.hayColision(b2)) {
-                    bolaBlanca.colisionar(b2);
-                }
+                Bola.colisionar(b1, b2);
+                Bola.colisionar(bolaBlanca, b2);
             }
-        }
+        }*/
         taco.actualizarTaco(angulo);
         panel.repaint();
+    }
+
+    /**
+     * ES POSIBLE QUE ESTE METODO SE DEBA ELIMINAR Metodo que agrega puntos a
+     * los bordes de la mesa, cada borde corresponde a un Polygon
+     */
+    public void crearContornosMesa() {
+        Point esquina1 = new Point(0, 0);
+        Point esquina2 = new Point(1280, 0);
+        Point esquina3 = new Point(0, 680);
+        Point esquina4 = new Point(1280, 680);
+
+        RellenaConPuntos.nuevaLinea(esquina1, esquina2, paredSuperior);
+        RellenaConPuntos.nuevaLinea(esquina2, esquina3, paredDerecha);
+        RellenaConPuntos.nuevaLinea(esquina3, esquina4, paredIzquierda);
+        RellenaConPuntos.nuevaLinea(esquina4, esquina1, paredInferior);
+
     }
 
     /**
@@ -155,6 +190,7 @@ public class Jugar {
     public void paint(Graphics g) {
         depositoBolas.paint(g);
         bolaBlanca.paint(g);
+
         taco.paint(g);
         conjuntoTroneras.paint(g);
     }

@@ -1,6 +1,7 @@
 package proyecto.semestral;
 
 import java.awt.*;
+import static java.lang.Math.*;
 
 /**
  * Clase abstracta Bola, contiene las atributos de la bola, x, y, color y radio,
@@ -10,10 +11,12 @@ import java.awt.*;
 abstract class Bola {
 
     private Color color;
-    private Velocidad velocidad;
+    private Vector velocidad;
     protected float x, y;
     protected float radio;
     private final float friccion;
+    public float vx, vy;
+    private float masa;
 
     /**
      * Constructor de la bola
@@ -24,19 +27,22 @@ abstract class Bola {
      * @param color define el "color" de la bola correspondiente
      */
     public Bola(float x, float y, float radio, Color color) {
-        velocidad = new Velocidad(0, 0);
+        velocidad = new Vector(0, 0);
         this.x = x;
         this.y = y;
         this.radio = radio;
         this.color = color;
-        friccion = (float) 0.25;
+        friccion = (float) 0.07;
+        vx = 0;
+        vy = 0;
+        masa = radio / 50;
     }
 
-    public void setVelocidad(Velocidad v) {
+    public void setVelocidad(Vector v) {
         velocidad = v;
     }
 
-    public Velocidad getVelocidad() {
+    public Vector getVelocidad() {
         return velocidad;
     }
 
@@ -104,27 +110,44 @@ abstract class Bola {
     }
 
     public void mover() {
-        x += velocidad.x;
-        y += velocidad.y;
-
-        // aplicar friccion
-        float mag = velocidad.magnitud();
+        x += vx;
+        y += vy;
+        if (x > 1250 - radio) {
+            x = 1250 - radio;
+            vx = -vx;
+        }
+        if (x < 0) {
+            x = radio;
+            vx = -vx;
+        }
+        if (y > 620 - radio) {
+            y = 620 - radio;
+            vy = -vy;
+        }
+        if (y < radio) {
+            y = radio;
+            vy = -vy;
+        }
+        float mag = (float) sqrt(vx * vx + vy * vy);
         if (mag < friccion) {
-            velocidad.escalar(0);
+            vx = 0;
+            vy = 0;
         } else {
-            velocidad.normalizar();
-            velocidad.escalar(mag - friccion);
+            vx /= mag;
+            vy /= mag;
+            vx *= mag - friccion;
+            vy *= mag - friccion;
         }
     }
 
     public boolean hayColision(Bola b) {
-        Velocidad v = new Velocidad(b.x - x, b.y - y);
+        Vector v = new Vector(b.x - x, b.y - y);
         return v.magnitud() < radio * 2;
     }
 
     public void descolisionar(Bola b) {
-        Velocidad puntoMedio = new Velocidad((x + b.x) / 2f, (y + b.y) / 2f);
-        Velocidad normal = new Velocidad(b.x - x, b.y - y);
+        Vector puntoMedio = new Vector((x + b.x) / 2f, (y + b.y) / 2f);
+        Vector normal = new Vector(b.x - x, b.y - y);
         normal.normalizar();
 
         b.setX(puntoMedio.x + normal.x * radio);
@@ -134,36 +157,48 @@ abstract class Bola {
         this.setY(puntoMedio.y - normal.y * radio);
     }
 
-    public void colisionar(Bola b) {
-        Velocidad normal = new Velocidad(b.x - x, b.y - y);
-        normal.normalizar();
+    public static void colisionar(Bola b1, Bola b2) {
+        float dx = b2.x - b1.x;
+        float dy = b2.y - b1.y;
+        float dist = (float) sqrt(dx * dx + dy * dy);
 
-        Velocidad tangente = new Velocidad(normal.y * -1, normal.x);
+        if (dist < b1.radio + b2.radio) {
+            float angle = (float) atan2(dy, dx);
+            float sin = (float) sin(angle), cos = (float) cos(angle);
 
-        float b1escalarNormal = Velocidad.punto(normal, this.velocidad);
-        float b2escalarNormal = Velocidad.punto(normal, b.velocidad);
+            float x1 = 0, y1 = 0;
+            float x2 = dx * cos + dy * sin;
+            float y2 = dy * cos - dx * sin;
 
-        float b1escalarTangente = Velocidad.punto(tangente, this.velocidad);
-        float b2escalarTangente = Velocidad.punto(tangente, b.velocidad);
+            // rotate velocity
+            float vx1 = b1.vx * cos + b1.vy * sin;
+            float vy1 = b1.vy * cos - b1.vx * sin;
+            float vx2 = b2.vx * cos + b2.vy * sin;
+            float vy2 = b2.vy * cos - b2.vx * sin;
 
-        Velocidad vectorB1_normal = new Velocidad(normal.x, normal.y);
-        vectorB1_normal.escalar(b2escalarNormal);
+            float vx1final = ((b1.masa - b2.masa) * vx1 + 2 * b2.masa * vx2) / (b1.masa + b2.masa);
+            float vx2final = ((b2.masa - b1.masa) * vx2 + 2 * b1.masa * vx1) / (b1.masa + b2.masa);
 
-        Velocidad vectorB2_normal = new Velocidad(normal.x, normal.y);
-        vectorB2_normal.escalar(b1escalarNormal);
+            vx1 = vx1final;
+            vx2 = vx2final;
 
-        Velocidad vectorB1_tan = new Velocidad(tangente.x, tangente.y);
-        vectorB1_tan.escalar(b1escalarTangente);
+            float x2final = x2 * cos - y2 * sin;
+            float y2final = y2 * cos + x2 * sin;
 
-        Velocidad vectorB2_tan = new Velocidad(tangente.x, tangente.y);
-        vectorB2_tan.escalar(b2escalarTangente);
+            b2.x = b1.x + x2final;
+            b2.y = b1.y + y2final;
 
-        this.setVelocidad(new Velocidad(vectorB1_tan.x + vectorB1_normal.x, vectorB1_tan.y + vectorB1_normal.y));
-        b.setVelocidad(new Velocidad(vectorB2_tan.x + vectorB2_normal.x, vectorB2_tan.y + vectorB2_normal.y));
+            b1.vx = vx1 * cos - vy1 * sin;
+            b1.vy = vy1 * cos + vx1 * sin;
+            b2.vx = vx2 * cos - vy2 * sin;
+            b2.vy = vy2 * cos + vx2 * sin;
+
+        }
     }
 
     /**
-     * Pinta la bola segun su color, posicion y radio
+     * Pinta la bola segun su color, posicion y radio. Incluyendo tambien el
+     * contorno (en negro) de cada bola
      *
      * @param g recibe la grafica g
      */
@@ -172,5 +207,7 @@ abstract class Bola {
     public void paint(Graphics g) {
         g.setColor(color);
         g.fillOval((int) x, (int) y, (int) radio * 2, (int) radio * 2);
+        g.setColor(Color.black);
+        g.drawOval((int) x, (int) y, (int) radio * 2, (int) radio * 2);
     }
 }

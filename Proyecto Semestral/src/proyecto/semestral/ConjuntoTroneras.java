@@ -52,7 +52,7 @@ public class ConjuntoTroneras {
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {
-        System.out.println(conjuntoTroneras.size()); // Indicador de la cantidad de bolas en pantalla
+        //System.out.println(conjuntoTroneras.size()); // Indicador de la cantidad de bolas en pantalla
         for (int i = 0; i < conjuntoTroneras.size(); i++) {
             conjuntoTroneras.get(i).paint(g);
         }

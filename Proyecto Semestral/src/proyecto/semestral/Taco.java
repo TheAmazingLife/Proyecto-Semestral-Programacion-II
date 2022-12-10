@@ -58,7 +58,7 @@ public class Taco {
      * presione las teclas
      */
     public void actualizarTaco(int angulo) {
-        System.out.println("ANGULO: " + angulo * 180 / PI);
+        //System.out.println("ANGULO: " + angulo * 180 / PI);
         poligono = new Polygon();
         x1 = (int) (bolaBlanca.getCentro().getX() + (bolaBlanca.getRadio() + 5) * cos(Math.toRadians(angulo)));
         y1 = (int) (bolaBlanca.getCentro().getY() + (bolaBlanca.getRadio() + 5) * sin(Math.toRadians(angulo)));
@@ -66,9 +66,9 @@ public class Taco {
         y2 = (int) (bolaBlanca.getCentro().getY() + (bolaBlanca.getRadio() + 150) * sin(Math.toRadians(angulo)));
         poligono.addPoint(x1, y1);
         poligono.addPoint(x2, y2);
-        System.out.println("Bola blanca: (" + bolaBlanca.getCentro().getX() + ", " + bolaBlanca.getCentro().getY() + " )");
-        System.out.println("pos1: (" + x1 + ", " + y1 + " )");
-        System.out.println("pos2: (" + x2 + ", " + y2 + " )");
+        //System.out.println("Bola blanca: (" + bolaBlanca.getCentro().getX() + ", " + bolaBlanca.getCentro().getY() + " )");
+        //System.out.println("pos1: (" + x1 + ", " + y1 + " )");
+        //System.out.println("pos2: (" + x2 + ", " + y2 + " )");
         RellenaConPuntos.nuevaLinea(x1, y1, x2, y2, poligono);
 
     }
@@ -79,7 +79,7 @@ public class Taco {
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {
-        g.drawPolyline(poligono.xpoints, poligono.ypoints, poligono.npoints);
         g.setColor(Color.black);
+        g.drawPolyline(poligono.xpoints, poligono.ypoints, poligono.npoints);
     }
 }
