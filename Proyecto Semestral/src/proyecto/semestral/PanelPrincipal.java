@@ -9,7 +9,7 @@ public class PanelPrincipal extends JPanel implements ActionListener {
     public Jugar jugar;
     private int posX, posY;
 
-    public PanelPrincipal(HolderNumBolas numBolas) {
+    public PanelPrincipal(HolderNumBolas numBolas, HolderScore score) {
         super();
         setXY(0, 0);
         setLayout(null);
@@ -17,7 +17,7 @@ public class PanelPrincipal extends JPanel implements ActionListener {
         JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/background.jpg")));
         background.setBounds(0, 0, 1280, 720);
         add(background);
-        jugar = new Jugar(this, numBolas);
+        jugar = new Jugar(this, numBolas, score);
         Timer t = new Timer(16, this);
         t.start();
     }

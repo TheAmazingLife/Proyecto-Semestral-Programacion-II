@@ -14,9 +14,14 @@ public class MenuBarraInferior implements ActionListener {
     //private DepositoBolas depositoBolas; // ! atributo no necesario, se puede obtene
     private int menuPosX, menuPosY;
     HolderNumBolas numBolas;
-    private int IntNumBolas;
+    HolderScore score;
+    private int intNumBolas;
+    private int intScore;
     ActionListener botonResetAl;
     Ventana v;
+
+    JLabel puntaje;
+    JLabel bolas;
 
     /**
      * Constructor de la barrInferior, asigna su panel y define su posicion x,y
@@ -25,61 +30,69 @@ public class MenuBarraInferior implements ActionListener {
      * @param posY define la "y" del panel
      * @param panel define el panel correspondiente
      */
-    public MenuBarraInferior(int posX, int posY, JPanel panel, HolderNumBolas numBolas, Ventana v) {
+    public MenuBarraInferior(int posX, int posY, JPanel panel, HolderNumBolas numBolas, HolderScore score, Ventana v) {
+        puntaje = new JLabel();
+        bolas = new JLabel();
         this.panel = panel;
         this.numBolas = numBolas;
+        this.score = score;
         this.v = v;
         menuPosX = posX;
         menuPosY = posY;
-        IntNumBolas = 0;
+        intNumBolas = -1;
+        intScore = -10;
         iniciarEscuchadores();
-        mostrarPuntaje();
         mostrarReset();
         Timer t = new Timer(16, (ActionListener) this);
         t.start();
     }
 
+    public void setScore() {
+        if (intScore != score.getScore()) {
+            intScore = score.getScore();
+            System.out.println(intScore);
+            mostrarPuntaje();
+        }
+    }
+
     public void setNumeroBolas() {
-        if (IntNumBolas != numBolas.getNumeroBolas()) {
-            System.out.println("CAMBIOS");
-            IntNumBolas = numBolas.getNumeroBolas();
+        if (intNumBolas != numBolas.getNumeroBolas()) {
+            intNumBolas = numBolas.getNumeroBolas();
             mostrarNumeroBolas();
         }
     }
 
     /**
-     * Muesta en la pantalla lo el puntaje correspondiente
+     * Muesta en la pantalla el puntaje correspondiente
      */
     private void mostrarPuntaje() {
-        // * tip: .getPuntaje() o hacer variable global que guarde el puntaje
-        // ! falta actualizar puntaje
-        JLabel puntaje = new JLabel("Score: ", SwingConstants.CENTER);
+        puntaje.setText("Score: " + Integer.toString(intScore));
 
-        puntaje.setBounds(menuPosX + 50, menuPosY + 10, 160, 30);
+        // puntaje.setBounds(menuPosX + 350, menuPosY + 10, 160, 30);
         puntaje.setForeground(Color.BLACK); // color de la letra de la etiqueta
         puntaje.setOpaque(true); // establecemos pintar el fondo de la etiqueta
         puntaje.setBackground(new Color(215, 230, 100)); // color de fondo de la etiqueta
         puntaje.setFont(new Font("arial", 3, 20));
 
         panel.add(puntaje);
+        panel.repaint();
     }
 
     /**
-     * Muestra en pantalla el numero de bolas
+     * Muestra en pantalla el numero de bolas que no han sido entroneradas
      */
     private void mostrarNumeroBolas() {
-        System.out.println(IntNumBolas);
+        System.out.println(intNumBolas);
 
-        JLabel bolas = new JLabel("Balls remaining: " + Integer.toString(IntNumBolas), SwingConstants.CENTER);
+        bolas.setText("Balls remaining: " + Integer.toString(intNumBolas));
 
-        bolas.setBounds(menuPosX + 350, menuPosY + 10, 185, 25);
+        //bolas.setBounds(menuPosX + 50, menuPosY + 10, 185, 25);
         bolas.setForeground(Color.BLACK); // color de la letra de la etiqueta
         bolas.setOpaque(true); // establecemos pintar el fondo de la etiqueta
         bolas.setBackground(new Color(215, 230, 100)); // color de fondo de la etiqueta
         bolas.setFont(new Font("arial", 3, 20));
 
-        panel.add(bolas, BorderLayout.SOUTH);
-        panel.setComponentZOrder(bolas, 0);
+        panel.add(bolas);
         panel.repaint();
     }
 
@@ -92,10 +105,8 @@ public class MenuBarraInferior implements ActionListener {
         botonReset.setForeground(Color.black);
         botonReset.setBackground(new Color(204, 255, 255)); // color de fondo de la etiqueta
         botonReset.setFont(new Font("arial", 3, 20));
-        // botonReset.setFont(new Font("arial", 3, 20));
         botonReset.setEnabled(true); // si es false, el boton esta "apagado"
         botonReset.setMnemonic('r'); // la tecla funciona con alt + letra
-
         botonReset.addActionListener(botonResetAl);
 
         panel.add(botonReset);
@@ -121,6 +132,7 @@ public class MenuBarraInferior implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        setScore();
         setNumeroBolas();
     }
 }

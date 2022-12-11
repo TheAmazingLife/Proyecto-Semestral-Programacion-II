@@ -10,10 +10,11 @@ public class Ventana extends JFrame implements KeyListener {
     private PanelSecundario panel2;
 
     public Ventana(HolderNumBolas numBolas) {
+        HolderScore score = new HolderScore();
         crearVentana();
-        panel1 = new PanelPrincipal(numBolas);
+        panel1 = new PanelPrincipal(numBolas, score);
         add(panel1);
-        panel2 = new PanelSecundario(this, numBolas);
+        panel2 = new PanelSecundario(this, numBolas, score);
         addKeyListener(this);
     }
 

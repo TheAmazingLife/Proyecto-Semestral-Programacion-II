@@ -13,25 +13,8 @@ public class Taco {
     public int x1, x2;
     public int y1, y2;
     Polygon poligono;
-    BolaBlanca bolaBlanca;
 
-    // determina si el taco es visible, si se golpea la bola blanca, debe
-    // desaparecer el taco
-    // private boolean dibujarTaco;
-    // TODO: Hacer un constructor vacio, que solo se le asigne una bola y que llame
-    // * actualizar taco, no es buena practica tener un constructor tan complejo
-    // ? Mas efectivo constructor vacio, y solo llamar a actualizar taco
-    /**
-     * Constructor del taco, lo posiciona en referencia a la bola blanca
-     *
-     * @param angulo Angulo en grados de el taco
-     * @param bolaBlanca Bola blanca en cual ocupar de referencia
-     */
-    public Taco(int angulo, BolaBlanca bolaBlanca) {
-        //dibujarTaco = false;
-        this.bolaBlanca = bolaBlanca;
-
-        actualizarTaco(angulo);
+    public Taco() {
     }
 
     public int getX1() {
@@ -66,7 +49,7 @@ public class Taco {
      * @param angulo angulo en grados sexagesimales que varía según el jugardor
      * presione las teclas
      */
-    public void actualizarTaco(int angulo) {
+    public void actualizarTaco(int angulo, BolaBlanca bolaBlanca) {
         //System.out.println("ANGULO: " + angulo * 180 / PI);
         poligono = new Polygon();
         x1 = (int) (bolaBlanca.getCentro().getX() + (bolaBlanca.getRadio() + 5) * cos(Math.toRadians(angulo)));

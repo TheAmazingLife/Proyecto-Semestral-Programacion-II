@@ -18,6 +18,7 @@ public class Jugar {
     private BolaBlanca bolaBlanca;
     private Taco taco;
     HolderNumBolas numBolas;
+    HolderScore score;
     private ConjuntoTroneras conjuntoTroneras;
 
     /**
@@ -25,14 +26,15 @@ public class Jugar {
      *
      * @param panel Recibe el panel en la cual mostrarse
      */
-    public Jugar(JPanel panel, HolderNumBolas numBolas) {
+    public Jugar(JPanel panel, HolderNumBolas numBolas, HolderScore score) {
         radio = 20;
         angulo = 0;
         this.numBolas = numBolas;
+        this.score = score;
         this.panel = panel;
         depositoBolas = new DepositoBolas();
         resetBolaBlanca();
-        taco = new Taco(angulo, bolaBlanca);
+        taco = new Taco();
         conjuntoTroneras = new ConjuntoTroneras();
     }
 
@@ -100,7 +102,7 @@ public class Jugar {
                 angulo++;
                 break;
         }
-        taco.actualizarTaco(angulo);
+        taco.actualizarTaco(angulo, bolaBlanca);
         panel.repaint();
     }
 
@@ -179,18 +181,31 @@ public class Jugar {
             depositoBolas.get(i).mover();
             if (conjuntoTroneras.verificarTroneras(depositoBolas.get(i)) == 1) {
                 depositoBolas.eliminarBola(depositoBolas.get(i));
+                if (conjuntoTroneras.verificarTroneras(bolaBlanca) != 2) {
+                    modificarPuntaje(1);
+                } else {
+                    resetBolaBlanca();
+                }
+            } else {
+                if (conjuntoTroneras.verificarTroneras(bolaBlanca) == 2) {
+                    modificarPuntaje(-1);
+                    resetBolaBlanca();
+                }
             }
-
+            System.out.println("PUNTAJE: " + score.getScore());
         }
         for (int i = 0; i < depositoBolas.size() - 1; i++) {
             for (int j = i + 1; j < depositoBolas.size(); j++) {
                 Bola.colisionar(depositoBolas.get(i), depositoBolas.get(j));
             }
         }
-        conjuntoTroneras.verificarTroneras(bolaBlanca);
         numBolas.setNumeroBolas(depositoBolas.size());
-        taco.actualizarTaco(angulo);
+        taco.actualizarTaco(angulo,bolaBlanca);
         panel.repaint();
+    }
+
+    public void modificarPuntaje(int puntaje) {
+        score.setScore(score.getScore() + puntaje);
     }
 
     /**

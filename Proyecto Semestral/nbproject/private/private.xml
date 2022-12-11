@@ -5,7 +5,7 @@
             <url>src/proyecto/semestral/MenuBarraInferior.java</url>
             <bookmark id="1">
                 <name/>
-                <line>72</line>
+                <line>86</line>
                 <key/>
             </bookmark>
         </file>
@@ -13,10 +13,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/ProyectoSemestral.java</file>
-            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/PanelSecundario.java</file>
+            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/Taco.java</file>
             <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/PanelPrincipal.java</file>
+            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/PanelSecundario.java</file>
+            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/HolderNumBolas.java</file>
+            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/Ventana.java</file>
+            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/MenuInicial.java</file>
             <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/Jugar.java</file>
             <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/MenuBarraInferior.java</file>
+            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/HolderScore.java</file>
+            <file>file:/D:/Usuarios/Pablo%20Sanhueza/Escritorio/UdeC/Segundo%20Año%20-%202022/2do%20Semestre%202022/Programación%20II/Proyecto%20Semestral/Proyecto/Proyecto-Semestral-Programacion-II/Proyecto%20Semestral/src/proyecto/semestral/ConjuntoTroneras.java</file>
         </group>
     </open-files>
 </project-private>

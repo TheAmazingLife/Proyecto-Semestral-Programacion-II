@@ -10,11 +10,11 @@ public class PanelSecundario extends JPanel {
     public MenuBarraInferior menu;
     private int posX, posY;
 
-    public PanelSecundario(Ventana v, HolderNumBolas numBolas) {
+    public PanelSecundario(Ventana v, HolderNumBolas numBolas, HolderScore score) {
         //setXY(0, 640);
         panel = new JPanel();
         panel.setBounds(posX, posY, 1280, 40);
-        menu = new MenuBarraInferior(posX, posY, panel, numBolas, v);
+        menu = new MenuBarraInferior(posX, posY, panel, numBolas, score, v);
         panel.setBackground(new Color(128, 64, 0));
         v.getContentPane().add(panel, BorderLayout.SOUTH);
     }
