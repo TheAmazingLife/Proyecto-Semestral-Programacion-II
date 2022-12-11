@@ -11,7 +11,6 @@ import static java.lang.Math.*;
 abstract class Bola {
 
     private Color color;
-    private Vector velocidad;
     protected float x, y;
     protected float radio;
     private final float friccion;
@@ -27,7 +26,6 @@ abstract class Bola {
      * @param color define el "color" de la bola correspondiente
      */
     public Bola(float x, float y, float radio, Color color) {
-        velocidad = new Vector(0, 0);
         this.x = x;
         this.y = y;
         this.radio = radio;
@@ -36,14 +34,6 @@ abstract class Bola {
         vx = 0;
         vy = 0;
         masa = radio / 50;
-    }
-
-    public void setVelocidad(Vector v) {
-        velocidad = v;
-    }
-
-    public Vector getVelocidad() {
-        return velocidad;
     }
 
     /**
@@ -109,22 +99,26 @@ abstract class Bola {
         this.y = y;
     }
 
+    /**
+     * Permite el desplazamiento de la bola por el mapa, lo limita solamente a
+     * las dimensiones dela mesa
+     */
     public void mover() {
         x += vx;
         y += vy;
-        if (x > 1250 - radio) {
-            x = 1250 - radio;
+        if (x > 1240 - radio) {
+            x = 1240 - radio;
             vx = -vx;
         }
         if (x < 0) {
             x = radio;
             vx = -vx;
         }
-        if (y > 620 - radio) {
-            y = 620 - radio;
+        if (y > 615 - radio) {
+            y = 615 - radio;
             vy = -vy;
         }
-        if (y < radio) {
+        if (y < 0) {
             y = radio;
             vy = -vy;
         }
@@ -140,23 +134,58 @@ abstract class Bola {
         }
     }
 
-    public boolean hayColision(Bola b) {
-        Vector v = new Vector(b.x - x, b.y - y);
-        return v.magnitud() < radio * 2;
+    /**
+     * Verifica si es que la bola está o no está encima de otra
+     *
+     * @param b2: la bola con la cual se compara
+     * @return: el valor de verdad true si es que no esta encima de otra, de lo
+     * contrario, false
+     */
+    public boolean bienPosicionado(Bola b2) {
+        boolean estado = true;
+        if (x + 2 * radio <= b2.x + 2 * b2.radio
+                && x + 2 * radio >= b2.x
+                && y >= b2.y
+                && y <= b2.y + 2 * b2.radio) {
+            estado = false;
+        } else if (x + 2 * radio <= b2.x + 2 * b2.radio
+                && x + 2 * radio >= b2.x
+                && y + 2 * radio >= b2.y
+                && y + 2 * radio <= b2.y + 2 * b2.radio) {
+            estado = false;
+        } else if (x >= b2.x
+                && x <= b2.x + 2 * b2.radio
+                && y >= b2.y
+                && y <= b2.y + 2 * b2.radio) {
+            estado = false;
+        } else if (x >= b2.x
+                && x <= b2.x + 2 * b2.radio
+                && y + 2 * radio >= b2.y
+                && y + 2 * radio <= b2.y + 2 * b2.radio) {
+            estado = false;
+        }
+        return estado;
     }
 
-    public void descolisionar(Bola b) {
-        Vector puntoMedio = new Vector((x + b.x) / 2f, (y + b.y) / 2f);
-        Vector normal = new Vector(b.x - x, b.y - y);
-        normal.normalizar();
+    /**
+     * Separa la bola de otra, o "las bolas que están una encima de otra"
+     *
+     * @param b2: bola con la cual se separa
+     */
+    public void descolisionar(Bola b2) {
+        b2.setX((int) (Math.random() * (1280 - 200) + 100));
+        b2.setY((int) (Math.random() * (640 - 200) + 100));
 
-        b.setX(puntoMedio.x + normal.x * radio);
-        b.setY(puntoMedio.y + normal.y * radio);
-
-        this.setX(puntoMedio.x - normal.x * radio);
-        this.setY(puntoMedio.y - normal.y * radio);
+        setX((int) (Math.random() * (1280 - 200) + 100));
+        setY((int) (Math.random() * (640 - 200) + 100));
     }
 
+    /**
+     * Simula las colisiones de dos bolas
+     *
+     * @param b1: bola colisionante numero 1
+     * @param b2: bola colisionante numero 2
+     */
     public static void colisionar(Bola b1, Bola b2) {
         float dx = b2.x - b1.x;
         float dy = b2.y - b1.y;
@@ -202,8 +231,6 @@ abstract class Bola {
      *
      * @param g recibe la grafica g
      */
-    // ? Asigna el color de manera correcta?
-    // ? Metodo abstracto paint?
     public void paint(Graphics g) {
         g.setColor(color);
         g.fillOval((int) x, (int) y, (int) radio * 2, (int) radio * 2);

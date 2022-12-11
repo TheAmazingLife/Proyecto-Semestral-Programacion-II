@@ -19,7 +19,7 @@ public class Ventana extends JFrame implements KeyListener {
     }
 
     public void crearVentana() {
-        setVisible(true);
+        setVisible(false);
         setTitle("Mesa de Pool");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);

@@ -47,9 +47,17 @@ public class Jugar {
      * La bola blanca aparece en una posicion randomica
      */
     public void resetBolaBlanca() {
-        float posXBolaBlanca = (float) (Math.random() * 1280);
-        float posYBolaBlanca = (float) (Math.random() * 640);
+        float posXBolaBlanca = (float) (Math.random() * (1280 - 200) + 100);
+        float posYBolaBlanca = (float) (Math.random() * (640 - 200) + 100);
         bolaBlanca = new BolaBlanca(posXBolaBlanca, posYBolaBlanca, radio);
+
+        for (int j = 0; j < depositoBolas.size(); j++) {
+            BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
+            if (!bolaBlanca.bienPosicionado(bolaAux2)) {
+                bolaBlanca = new BolaBlanca((float) (Math.random() * (1280 - 200) + 100), (float) (Math.random() * (640 - 200) + 100), radio);
+                j = 0;
+            }
+        }
     }
 
     /**
@@ -67,19 +75,34 @@ public class Jugar {
      */
     public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
-            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * 1200) + 10, (int) (Math.random() * 600) + 20, radio);
+            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * (1280 - 200) + 100), (int) (Math.random() * (640 - 200) + 100), radio);
 
             // no permitir que aparezca "una bola encima de otra"
             for (int j = 0; j < depositoBolas.size(); j++) {
                 BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
                 if (bolaAux1 != bolaAux2) {
-                    if (bolaAux1.hayColision(bolaAux2)) {
+                    if (!bolaAux1.bienPosicionado(bolaAux2)) {
+                        System.out.println("PROBLEMAS");
                         bolaAux1.descolisionar(bolaAux2);
+                        j = 0;
                     }
+                }
+                if (!bolaAux1.bienPosicionado(bolaBlanca)) {
+                    bolaAux1.descolisionar(bolaBlanca);
                 }
             }
             // Una vez la bola tenga una posicion adecuada, se agrega al deposito
             depositoBolas.addBola(bolaAux1);
+        }
+    }
+
+    public void verificarPosBolas() {
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            for (int j = 1; j < depositoBolas.size() - 1; j++) {
+                if (!depositoBolas.get(i).bienPosicionado(depositoBolas.get(j))) {
+                    depositoBolas.get(i).descolisionar(depositoBolas.get(j));
+                }
+            }
         }
     }
 
@@ -131,6 +154,9 @@ public class Jugar {
      * velocidad depende del alguno en el cual se encuentra el taco. Dado que a
      * que pueden exitir infinitos angulos que son iguales, este se determina
      * según las posiciones x's e y's del taco
+     *
+     * Los cuadrantes se definen considerando el centro de la bolaBlanca como el
+     * centro del sistema de referencia, con el eje y mirando hacia arriba
      */
     public void golpearBola() {
         if (sePuedeMover()) {
@@ -192,7 +218,6 @@ public class Jugar {
                     resetBolaBlanca();
                 }
             }
-            System.out.println("PUNTAJE: " + score.getScore());
         }
         for (int i = 0; i < depositoBolas.size() - 1; i++) {
             for (int j = i + 1; j < depositoBolas.size(); j++) {
@@ -200,7 +225,7 @@ public class Jugar {
             }
         }
         numBolas.setNumeroBolas(depositoBolas.size());
-        taco.actualizarTaco(angulo,bolaBlanca);
+        taco.actualizarTaco(angulo, bolaBlanca);
         panel.repaint();
     }
 

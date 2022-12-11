@@ -12,7 +12,6 @@ public class ProyectoSemestral {
     public static void main(String[] args) {
         HolderNumBolas numBolas = new HolderNumBolas();
         Ventana ventana = new Ventana(numBolas);
-        ventana.setVisible(false);
         MenuInicial menuInicial = new MenuInicial(ventana, numBolas);
         menuInicial.setVisible(true);
     }

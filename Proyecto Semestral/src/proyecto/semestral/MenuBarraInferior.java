@@ -11,7 +11,6 @@ import java.awt.event.*;
 public class MenuBarraInferior implements ActionListener {
 
     private JPanel panel;
-    //private DepositoBolas depositoBolas; // ! atributo no necesario, se puede obtene
     private int menuPosX, menuPosY;
     HolderNumBolas numBolas;
     HolderScore score;
@@ -50,7 +49,6 @@ public class MenuBarraInferior implements ActionListener {
     public void setScore() {
         if (intScore != score.getScore()) {
             intScore = score.getScore();
-            System.out.println(intScore);
             mostrarPuntaje();
         }
     }
@@ -68,7 +66,6 @@ public class MenuBarraInferior implements ActionListener {
     private void mostrarPuntaje() {
         puntaje.setText("Score: " + Integer.toString(intScore));
 
-        // puntaje.setBounds(menuPosX + 350, menuPosY + 10, 160, 30);
         puntaje.setForeground(Color.BLACK); // color de la letra de la etiqueta
         puntaje.setOpaque(true); // establecemos pintar el fondo de la etiqueta
         puntaje.setBackground(new Color(215, 230, 100)); // color de fondo de la etiqueta
@@ -82,11 +79,8 @@ public class MenuBarraInferior implements ActionListener {
      * Muestra en pantalla el numero de bolas que no han sido entroneradas
      */
     private void mostrarNumeroBolas() {
-        System.out.println(intNumBolas);
-
         bolas.setText("Balls remaining: " + Integer.toString(intNumBolas));
 
-        //bolas.setBounds(menuPosX + 50, menuPosY + 10, 185, 25);
         bolas.setForeground(Color.BLACK); // color de la letra de la etiqueta
         bolas.setOpaque(true); // establecemos pintar el fondo de la etiqueta
         bolas.setBackground(new Color(215, 230, 100)); // color de fondo de la etiqueta
@@ -108,7 +102,7 @@ public class MenuBarraInferior implements ActionListener {
         botonReset.setEnabled(true); // si es false, el boton esta "apagado"
         botonReset.setMnemonic('r'); // la tecla funciona con alt + letra
         botonReset.addActionListener(botonResetAl);
-
+        botonReset.setFocusable(false);
         panel.add(botonReset);
     }
 
