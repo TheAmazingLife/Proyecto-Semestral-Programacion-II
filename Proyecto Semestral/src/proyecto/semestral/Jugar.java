@@ -1,6 +1,5 @@
 package proyecto.semestral;
 
-import geometricas.RellenaConPuntos;
 import java.awt.*;
 import javax.swing.*;
 
@@ -18,36 +17,28 @@ public class Jugar {
     private DepositoBolas depositoBolas;
     private BolaBlanca bolaBlanca;
     private Taco taco;
-    private Polygon paredSuperior;
-    private Polygon paredInferior;
-    private Polygon paredIzquierda;
-    private Polygon paredDerecha;
-
+    HolderNumBolas numBolas;
     private ConjuntoTroneras conjuntoTroneras;
 
-    // ! Mejorar estructura del programa, ideal tener una mesa e iniciar juego
-    // ! (pintar bolas, movimiento etc)
     /**
      * Constructor recibe la ventana e inicializa las bolas
      *
      * @param panel Recibe el panel en la cual mostrarse
      */
-    public Jugar(JPanel panel) {
+    public Jugar(JPanel panel, HolderNumBolas numBolas) {
         radio = 20;
         angulo = 0;
-        numeroInicialBolas = 12;
+        this.numBolas = numBolas;
         this.panel = panel;
         depositoBolas = new DepositoBolas();
         resetBolaBlanca();
         taco = new Taco(angulo, bolaBlanca);
         conjuntoTroneras = new ConjuntoTroneras();
-        inciarBolas();
-        paredSuperior = new Polygon();
-        paredInferior = new Polygon();
-        paredIzquierda = new Polygon();
-        paredDerecha = new Polygon();
+    }
 
-        crearContornosMesa();
+    public void setNumeroBolas() {
+        numeroInicialBolas = numBolas.getNumeroBolas();
+        inciarBolas();
     }
 
     /**
@@ -68,7 +59,6 @@ public class Jugar {
         return depositoBolas.size();
     }
 
-    // TODO: limitar posiciones de la generacion de bolas (limitar x e y)
     /**
      * Inicia las bolas, generando bolas en posiciones randomicas, establece su
      * radio y las agrega a la lista de bolas.
@@ -198,25 +188,9 @@ public class Jugar {
             }
         }
         conjuntoTroneras.verificarTroneras(bolaBlanca);
+        numBolas.setNumeroBolas(depositoBolas.size());
         taco.actualizarTaco(angulo);
         panel.repaint();
-    }
-
-    /**
-     * ES POSIBLE QUE ESTE METODO SE DEBA ELIMINAR Metodo que agrega puntos a
-     * los bordes de la mesa, cada borde corresponde a un Polygon
-     */
-    public void crearContornosMesa() {
-        Point esquina1 = new Point(0, 0);
-        Point esquina2 = new Point(1280, 0);
-        Point esquina3 = new Point(0, 680);
-        Point esquina4 = new Point(1280, 680);
-
-        RellenaConPuntos.nuevaLinea(esquina1, esquina2, paredSuperior);
-        RellenaConPuntos.nuevaLinea(esquina2, esquina3, paredDerecha);
-        RellenaConPuntos.nuevaLinea(esquina3, esquina4, paredIzquierda);
-        RellenaConPuntos.nuevaLinea(esquina4, esquina1, paredInferior);
-
     }
 
     /**

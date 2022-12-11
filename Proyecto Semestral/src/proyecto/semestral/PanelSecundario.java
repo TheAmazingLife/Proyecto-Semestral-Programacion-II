@@ -1,23 +1,22 @@
 package proyecto.semestral;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.*;
 
 public class PanelSecundario extends JPanel {
 
     private JPanel panel;
-    private MenuBarraInferior menu;
+    public MenuBarraInferior menu;
     private int posX, posY;
 
-    // TODO: mejorar el contructor, solo llamando crear ventana una vez por singleton
-    public PanelSecundario(JFrame v) {
-        setXY(0, 640);
+    public PanelSecundario(Ventana v, HolderNumBolas numBolas) {
+        //setXY(0, 640);
         panel = new JPanel();
-        panel.setLayout(null);
         panel.setBounds(posX, posY, 1280, 40);
-        panel.setBackground(Color.red);
-        menu = new MenuBarraInferior(posX, posY, panel); // ! COMO LLEGA HASTA ACÁ?
-        v.getContentPane().add(panel);
+        menu = new MenuBarraInferior(posX, posY, panel, numBolas, v);
+        panel.setBackground(new Color(128, 64, 0));
+        v.getContentPane().add(panel, BorderLayout.SOUTH);
     }
 
     private void setXY(int x, int y) {

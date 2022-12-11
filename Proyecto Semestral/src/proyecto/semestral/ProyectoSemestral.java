@@ -2,7 +2,7 @@ package proyecto.semestral;
 
 /**
  * Llama a la ventana e inicia el juego
- * 
+ *
  * @author Pablo Sanhueza
  * @author Joaquin San Martin
  * @author Luciano Argomedo
@@ -10,7 +10,10 @@ package proyecto.semestral;
 public class ProyectoSemestral {
 
     public static void main(String[] args) {
-        Ventana v = new Ventana();
-        v.setVisible(true);
+        HolderNumBolas numBolas = new HolderNumBolas();
+        Ventana ventana = new Ventana(numBolas);
+        ventana.setVisible(false);
+        MenuInicial menuInicial = new MenuInicial(ventana, numBolas);
+        menuInicial.setVisible(true);
     }
 }
