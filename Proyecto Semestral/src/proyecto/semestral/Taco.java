@@ -50,6 +50,15 @@ public class Taco {
         return y2;
     }
 
+    public float magnitudX() {
+        return (float) sqrt((x2 - x1) * (x2 - x1));
+    }
+
+    public float magnitudY() {
+        return (float) sqrt((y2 - y1) * (y2 - y1));
+
+    }
+
     /**
      * Cambia la posicion del taco dependiendo de las teclas que presione el
      * jugador
@@ -66,9 +75,9 @@ public class Taco {
         y2 = (int) (bolaBlanca.getCentro().getY() + (bolaBlanca.getRadio() + 150) * sin(Math.toRadians(angulo)));
         poligono.addPoint(x1, y1);
         poligono.addPoint(x2, y2);
-        //System.out.println("Bola blanca: (" + bolaBlanca.getCentro().getX() + ", " + bolaBlanca.getCentro().getY() + " )");
-        //System.out.println("pos1: (" + x1 + ", " + y1 + " )");
-        //System.out.println("pos2: (" + x2 + ", " + y2 + " )");
+
+        //se le otorga grosor y perspectiva al taco
+        poligono.addPoint(x2, y2 - 10);
         RellenaConPuntos.nuevaLinea(x1, y1, x2, y2, poligono);
 
     }
@@ -80,6 +89,6 @@ public class Taco {
      */
     public void paint(Graphics g) {
         g.setColor(Color.black);
-        g.drawPolyline(poligono.xpoints, poligono.ypoints, poligono.npoints);
+        g.fillPolygon(poligono.xpoints, poligono.ypoints, poligono.npoints);
     }
 }

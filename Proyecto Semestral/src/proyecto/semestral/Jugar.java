@@ -75,7 +75,7 @@ public class Jugar {
      */
     public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
-            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * 1200) + 30, (int) (Math.random() * 600) + 20, radio);
+            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * 1200) + 10, (int) (Math.random() * 600) + 20, radio);
 
             // no permitir que aparezca "una bola encima de otra"
             for (int j = 0; j < depositoBolas.size(); j++) {
@@ -86,7 +86,6 @@ public class Jugar {
                     }
                 }
             }
-
             // Una vez la bola tenga una posicion adecuada, se agrega al deposito
             depositoBolas.addBola(bolaAux1);
         }
@@ -116,12 +115,63 @@ public class Jugar {
     }
 
     /**
-     * Golpea la bola blanca, se le asigna una velocidad
+     * Verifica si todas las bolas tienen o no tienen movimiento
+     *
+     * @return booleano: true si es que no se mueven
+     */
+    public boolean sePuedeMover() {
+        boolean estado = true;
+        if (bolaBlanca.vx != 0 || bolaBlanca.vy != 0) {
+            estado = false;
+        } else {
+            for (int i = 0; i < depositoBolas.size(); i++) {
+                if (depositoBolas.get(i).vx != 0 || depositoBolas.get(i).vy != 0) {
+                    estado = false;
+                    break;
+                }
+            }
+        }
+        return estado;
+    }
+
+    /**
+     * Golpea la bola blanca, se le asigna una velocidad en x e y, esta
+     * velocidad depende del alguno en el cual se encuentra el taco. Dado que a
+     * que pueden exitir infinitos angulos que son iguales, este se determina
+     * según las posiciones x's e y's del taco
      */
     public void golpearBola() {
-        if (bolaBlanca.vx == 0 && bolaBlanca.vy == 0) {
-            bolaBlanca.vx = -5;
-            bolaBlanca.vy = 0;
+        if (sePuedeMover()) {
+            // caso 1er cuadrante
+            if (taco.getX1() <= taco.getX2() && taco.getY1() >= taco.getY2()) {
+                System.out.println("primer cuadrante");
+                bolaBlanca.vx = -(taco.magnitudX() / 10);
+                bolaBlanca.vy = taco.magnitudY() / 10;
+            } else {
+                // caso 2do cuadrante
+                if (taco.getX1() >= taco.getX2() && taco.getY1() >= taco.getY2()) {
+                    System.out.println("segundo cuadrante");
+
+                    bolaBlanca.vx = taco.magnitudX() / 10;
+                    bolaBlanca.vy = taco.magnitudY() / 10;
+                } else {
+                    // caso 3er cuadrante
+                    if (taco.getX1() >= taco.getX2() && taco.getY1() <= taco.getY2()) {
+                        System.out.println("tercer cuadrante");
+
+                        bolaBlanca.vx = taco.magnitudX() / 10;
+                        bolaBlanca.vy = -(taco.magnitudY() / 10);
+                    } else {
+                        // caso 4to cuadrante
+                        if (taco.getX1() <= taco.getX2() && taco.getY1() <= taco.getY2()) {
+                            System.out.println("cuarto cuadrante");
+
+                            bolaBlanca.vx = -(taco.magnitudX() / 10);
+                            bolaBlanca.vy = -(taco.magnitudY() / 10);
+                        }
+                    }
+                }
+            }
         } else {
             System.out.println("La bola blanca sigue en movimiento");
         }
@@ -135,32 +185,19 @@ public class Jugar {
     public void moverse() {
         bolaBlanca.mover();
         for (int i = 0; i < depositoBolas.size(); i++) {
+            Bola.colisionar(bolaBlanca, depositoBolas.get(i));
             depositoBolas.get(i).mover();
+            if (conjuntoTroneras.verificarTroneras(depositoBolas.get(i)) == 1) {
+                depositoBolas.eliminarBola(depositoBolas.get(i));
+            }
+
         }
         for (int i = 0; i < depositoBolas.size() - 1; i++) {
-            Bola.colisionar(bolaBlanca, depositoBolas.get(i));
             for (int j = i + 1; j < depositoBolas.size(); j++) {
                 Bola.colisionar(depositoBolas.get(i), depositoBolas.get(j));
             }
-        }/*
-        for (int i = 0; i < depositoBolas.size(); i++) {
-            Bola b1 = depositoBolas.get(i);
-
-            b1.mover();
-            bolaBlanca.mover();
-
-            // hace lectura de todas las posibles colisiones
-            for (int j = 0; j < depositoBolas.size(); j++) {
-                if (i == j) {
-                    continue;
-                }
-
-                Bola b2 = depositoBolas.get(j);
-
-                Bola.colisionar(b1, b2);
-                Bola.colisionar(bolaBlanca, b2);
-            }
-        }*/
+        }
+        conjuntoTroneras.verificarTroneras(bolaBlanca);
         taco.actualizarTaco(angulo);
         panel.repaint();
     }
@@ -188,11 +225,12 @@ public class Jugar {
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {
+        conjuntoTroneras.paint(g);
         depositoBolas.paint(g);
         bolaBlanca.paint(g);
-
-        taco.paint(g);
-        conjuntoTroneras.paint(g);
+        if (sePuedeMover()) {
+            taco.paint(g);
+        }
     }
 
 }
