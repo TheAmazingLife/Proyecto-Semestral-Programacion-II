@@ -40,8 +40,10 @@ public class DepositoBolas {
     /**
      * Elimina la bola del depositoBolas
      */
-    public void eliminarBola() {
-        // TODO
+    public void eliminarBola(Bola bola) {
+        if (depositoBolas.indexOf(bola) > 0) {
+            depositoBolas.remove(depositoBolas.indexOf(bola));
+        }
     }
 
     /**

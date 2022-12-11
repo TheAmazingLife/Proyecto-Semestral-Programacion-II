@@ -1,9 +1,7 @@
 package proyecto.semestral;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class PanelPrincipal extends JPanel implements ActionListener {
@@ -11,13 +9,15 @@ public class PanelPrincipal extends JPanel implements ActionListener {
     public Jugar jugar;
     private int posX, posY;
 
-    public PanelPrincipal(JFrame v) {
+    public PanelPrincipal(HolderNumBolas numBolas, HolderScore score) {
         super();
         setXY(0, 0);
         setLayout(null);
         setBounds(posX, posY, 1280, 640);
-        setBackground(new Color(11, 122, 37));
-        jugar = new Jugar(this);
+        JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/background.jpg")));
+        background.setBounds(0, 0, 1280, 720);
+        add(background);
+        jugar = new Jugar(this, numBolas, score);
         Timer t = new Timer(16, this);
         t.start();
     }

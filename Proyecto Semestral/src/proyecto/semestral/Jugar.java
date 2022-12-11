@@ -1,6 +1,5 @@
 package proyecto.semestral;
 
-import geometricas.RellenaConPuntos;
 import java.awt.*;
 import javax.swing.*;
 
@@ -18,45 +17,47 @@ public class Jugar {
     private DepositoBolas depositoBolas;
     private BolaBlanca bolaBlanca;
     private Taco taco;
-    private Polygon paredSuperior;
-    private Polygon paredInferior;
-    private Polygon paredIzquierda;
-    private Polygon paredDerecha;
-
+    HolderNumBolas numBolas;
+    HolderScore score;
     private ConjuntoTroneras conjuntoTroneras;
 
-    // ! Mejorar estructura del programa, ideal tener una mesa e iniciar juego
-    // ! (pintar bolas, movimiento etc)
     /**
      * Constructor recibe la ventana e inicializa las bolas
      *
      * @param panel Recibe el panel en la cual mostrarse
      */
-    public Jugar(JPanel panel) {
+    public Jugar(JPanel panel, HolderNumBolas numBolas, HolderScore score) {
         radio = 20;
         angulo = 0;
-        numeroInicialBolas = 12;
+        this.numBolas = numBolas;
+        this.score = score;
         this.panel = panel;
         depositoBolas = new DepositoBolas();
         resetBolaBlanca();
-        taco = new Taco(angulo, bolaBlanca);
+        taco = new Taco();
         conjuntoTroneras = new ConjuntoTroneras();
-        inciarBolas();
-        paredSuperior = new Polygon();
-        paredInferior = new Polygon();
-        paredIzquierda = new Polygon();
-        paredDerecha = new Polygon();
+    }
 
-        crearContornosMesa();
+    public void setNumeroBolas() {
+        numeroInicialBolas = numBolas.getNumeroBolas();
+        inciarBolas();
     }
 
     /**
      * La bola blanca aparece en una posicion randomica
      */
     public void resetBolaBlanca() {
-        float posXBolaBlanca = (float) (Math.random() * 1280);
-        float posYBolaBlanca = (float) (Math.random() * 640);
+        float posXBolaBlanca = (float) (Math.random() * (1280 - 200) + 100);
+        float posYBolaBlanca = (float) (Math.random() * (640 - 200) + 100);
         bolaBlanca = new BolaBlanca(posXBolaBlanca, posYBolaBlanca, radio);
+
+        for (int j = 0; j < depositoBolas.size(); j++) {
+            BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
+            if (!bolaBlanca.bienPosicionado(bolaAux2)) {
+                bolaBlanca = new BolaBlanca((float) (Math.random() * (1280 - 200) + 100), (float) (Math.random() * (640 - 200) + 100), radio);
+                j = 0;
+            }
+        }
     }
 
     /**
@@ -68,27 +69,40 @@ public class Jugar {
         return depositoBolas.size();
     }
 
-    // TODO: limitar posiciones de la generacion de bolas (limitar x e y)
     /**
      * Inicia las bolas, generando bolas en posiciones randomicas, establece su
      * radio y las agrega a la lista de bolas.
      */
     public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
-            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * 1200) + 30, (int) (Math.random() * 600) + 20, radio);
+            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * (1280 - 200) + 100), (int) (Math.random() * (640 - 200) + 100), radio);
 
             // no permitir que aparezca "una bola encima de otra"
             for (int j = 0; j < depositoBolas.size(); j++) {
                 BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
                 if (bolaAux1 != bolaAux2) {
-                    if (bolaAux1.hayColision(bolaAux2)) {
+                    if (!bolaAux1.bienPosicionado(bolaAux2)) {
+                        System.out.println("PROBLEMAS");
                         bolaAux1.descolisionar(bolaAux2);
+                        j = 0;
                     }
                 }
+                if (!bolaAux1.bienPosicionado(bolaBlanca)) {
+                    bolaAux1.descolisionar(bolaBlanca);
+                }
             }
-
             // Una vez la bola tenga una posicion adecuada, se agrega al deposito
             depositoBolas.addBola(bolaAux1);
+        }
+    }
+
+    public void verificarPosBolas() {
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            for (int j = 1; j < depositoBolas.size() - 1; j++) {
+                if (!depositoBolas.get(i).bienPosicionado(depositoBolas.get(j))) {
+                    depositoBolas.get(i).descolisionar(depositoBolas.get(j));
+                }
+            }
         }
     }
 
@@ -111,17 +125,71 @@ public class Jugar {
                 angulo++;
                 break;
         }
-        taco.actualizarTaco(angulo);
+        taco.actualizarTaco(angulo, bolaBlanca);
         panel.repaint();
     }
 
     /**
-     * Golpea la bola blanca, se le asigna una velocidad
+     * Verifica si todas las bolas tienen o no tienen movimiento
+     *
+     * @return booleano: true si es que no se mueven
+     */
+    public boolean sePuedeMover() {
+        boolean estado = true;
+        if (bolaBlanca.vx != 0 || bolaBlanca.vy != 0) {
+            estado = false;
+        } else {
+            for (int i = 0; i < depositoBolas.size(); i++) {
+                if (depositoBolas.get(i).vx != 0 || depositoBolas.get(i).vy != 0) {
+                    estado = false;
+                    break;
+                }
+            }
+        }
+        return estado;
+    }
+
+    /**
+     * Golpea la bola blanca, se le asigna una velocidad en x e y, esta
+     * velocidad depende del alguno en el cual se encuentra el taco. Dado que a
+     * que pueden exitir infinitos angulos que son iguales, este se determina
+     * según las posiciones x's e y's del taco
+     *
+     * Los cuadrantes se definen considerando el centro de la bolaBlanca como el
+     * centro del sistema de referencia, con el eje y mirando hacia arriba
      */
     public void golpearBola() {
-        if (bolaBlanca.vx == 0 && bolaBlanca.vy == 0) {
-            bolaBlanca.vx = -5;
-            bolaBlanca.vy = 0;
+        if (sePuedeMover()) {
+            // caso 1er cuadrante
+            if (taco.getX1() <= taco.getX2() && taco.getY1() >= taco.getY2()) {
+                System.out.println("primer cuadrante");
+                bolaBlanca.vx = -(taco.magnitudX() / 10);
+                bolaBlanca.vy = taco.magnitudY() / 10;
+            } else {
+                // caso 2do cuadrante
+                if (taco.getX1() >= taco.getX2() && taco.getY1() >= taco.getY2()) {
+                    System.out.println("segundo cuadrante");
+
+                    bolaBlanca.vx = taco.magnitudX() / 10;
+                    bolaBlanca.vy = taco.magnitudY() / 10;
+                } else {
+                    // caso 3er cuadrante
+                    if (taco.getX1() >= taco.getX2() && taco.getY1() <= taco.getY2()) {
+                        System.out.println("tercer cuadrante");
+
+                        bolaBlanca.vx = taco.magnitudX() / 10;
+                        bolaBlanca.vy = -(taco.magnitudY() / 10);
+                    } else {
+                        // caso 4to cuadrante
+                        if (taco.getX1() <= taco.getX2() && taco.getY1() <= taco.getY2()) {
+                            System.out.println("cuarto cuadrante");
+
+                            bolaBlanca.vx = -(taco.magnitudX() / 10);
+                            bolaBlanca.vy = -(taco.magnitudY() / 10);
+                        }
+                    }
+                }
+            }
         } else {
             System.out.println("La bola blanca sigue en movimiento");
         }
@@ -135,51 +203,34 @@ public class Jugar {
     public void moverse() {
         bolaBlanca.mover();
         for (int i = 0; i < depositoBolas.size(); i++) {
+            Bola.colisionar(bolaBlanca, depositoBolas.get(i));
             depositoBolas.get(i).mover();
+            if (conjuntoTroneras.verificarTroneras(depositoBolas.get(i)) == 1) {
+                depositoBolas.eliminarBola(depositoBolas.get(i));
+                if (conjuntoTroneras.verificarTroneras(bolaBlanca) != 2) {
+                    modificarPuntaje(1);
+                } else {
+                    resetBolaBlanca();
+                }
+            } else {
+                if (conjuntoTroneras.verificarTroneras(bolaBlanca) == 2) {
+                    modificarPuntaje(-1);
+                    resetBolaBlanca();
+                }
+            }
         }
         for (int i = 0; i < depositoBolas.size() - 1; i++) {
-            Bola.colisionar(bolaBlanca, depositoBolas.get(i));
             for (int j = i + 1; j < depositoBolas.size(); j++) {
                 Bola.colisionar(depositoBolas.get(i), depositoBolas.get(j));
             }
-        }/*
-        for (int i = 0; i < depositoBolas.size(); i++) {
-            Bola b1 = depositoBolas.get(i);
-
-            b1.mover();
-            bolaBlanca.mover();
-
-            // hace lectura de todas las posibles colisiones
-            for (int j = 0; j < depositoBolas.size(); j++) {
-                if (i == j) {
-                    continue;
-                }
-
-                Bola b2 = depositoBolas.get(j);
-
-                Bola.colisionar(b1, b2);
-                Bola.colisionar(bolaBlanca, b2);
-            }
-        }*/
-        taco.actualizarTaco(angulo);
+        }
+        numBolas.setNumeroBolas(depositoBolas.size());
+        taco.actualizarTaco(angulo, bolaBlanca);
         panel.repaint();
     }
 
-    /**
-     * ES POSIBLE QUE ESTE METODO SE DEBA ELIMINAR Metodo que agrega puntos a
-     * los bordes de la mesa, cada borde corresponde a un Polygon
-     */
-    public void crearContornosMesa() {
-        Point esquina1 = new Point(0, 0);
-        Point esquina2 = new Point(1280, 0);
-        Point esquina3 = new Point(0, 680);
-        Point esquina4 = new Point(1280, 680);
-
-        RellenaConPuntos.nuevaLinea(esquina1, esquina2, paredSuperior);
-        RellenaConPuntos.nuevaLinea(esquina2, esquina3, paredDerecha);
-        RellenaConPuntos.nuevaLinea(esquina3, esquina4, paredIzquierda);
-        RellenaConPuntos.nuevaLinea(esquina4, esquina1, paredInferior);
-
+    public void modificarPuntaje(int puntaje) {
+        score.setScore(score.getScore() + puntaje);
     }
 
     /**
@@ -188,11 +239,12 @@ public class Jugar {
      * @param g recibe la grafica g
      */
     public void paint(Graphics g) {
+        conjuntoTroneras.paint(g);
         depositoBolas.paint(g);
         bolaBlanca.paint(g);
-
-        taco.paint(g);
-        conjuntoTroneras.paint(g);
+        if (sePuedeMover()) {
+            taco.paint(g);
+        }
     }
 
 }

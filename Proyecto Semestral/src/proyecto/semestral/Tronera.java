@@ -8,8 +8,8 @@ import java.awt.*;
  */
 public class Tronera {
 
-    int posX, posY;
-    int radio;
+    private int posX, posY;
+    private int radio;
 
     public Tronera(int posX, int posY, int radio) {
         this.posX = posX;
@@ -17,8 +17,16 @@ public class Tronera {
         this.radio = radio;
     }
 
-    public void verificarTronera() {
+    public int getX() {
+        return posX;
+    }
 
+    public int getY() {
+        return posY;
+    }
+
+    public int getRadio() {
+        return radio;
     }
 
     public void paint(Graphics g) {
