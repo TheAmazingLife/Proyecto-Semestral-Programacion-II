@@ -1,5 +1,6 @@
 package proyecto.semestral;
 
+import geometricas.Angular;
 import java.awt.*;
 import javax.swing.*;
 
@@ -50,14 +51,6 @@ public class Jugar {
         float posXBolaBlanca = (float) (Math.random() * (1280 - 200) + 100);
         float posYBolaBlanca = (float) (Math.random() * (640 - 200) + 100);
         bolaBlanca = new BolaBlanca(posXBolaBlanca, posYBolaBlanca, radio);
-
-        for (int j = 0; j < depositoBolas.size(); j++) {
-            BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
-            if (!bolaBlanca.bienPosicionado(bolaAux2)) {
-                bolaBlanca = new BolaBlanca((float) (Math.random() * (1280 - 200) + 100), (float) (Math.random() * (640 - 200) + 100), radio);
-                j = 0;
-            }
-        }
     }
 
     /**
@@ -79,18 +72,40 @@ public class Jugar {
 
             // no permitir que aparezca "una bola encima de otra"
             for (int j = 0; j < depositoBolas.size(); j++) {
+
                 BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
+
+                int centroBolaAux1X = (int) (bolaAux1.x + bolaAux1.radio);
+                int centroBolaAux1Y = (int) (bolaAux1.y + bolaAux1.radio);
+                int centroBolaAux2X = (int) (bolaAux2.x + bolaAux2.radio);
+                int centroBolaAux2Y = (int) (bolaAux2.y + bolaAux2.radio);
+
+                //System.out.println(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y));
+                if (Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio) {
+                    bolaAux1.descolisionar(bolaAux2);
+                    j = -1;
+                }
+                centroBolaAux1X = (int) (bolaAux1.x + bolaAux1.radio);
+                centroBolaAux1Y = (int) (bolaAux1.y + bolaAux1.radio);
+                centroBolaAux2X = (int) (bolaBlanca.getCentro().getX() + bolaBlanca.getRadio());
+                centroBolaAux2Y = (int) (bolaBlanca.getCentro().getY() + bolaBlanca.getRadio());
+                if (Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio) {
+                    bolaAux1.descolisionar(bolaBlanca);
+                }
+            }
+            /*
                 if (bolaAux1 != bolaAux2) {
                     if (!bolaAux1.bienPosicionado(bolaAux2)) {
                         System.out.println("PROBLEMAS");
                         bolaAux1.descolisionar(bolaAux2);
-                        j = 0;
+                        j = -1;
                     }
                 }
                 if (!bolaAux1.bienPosicionado(bolaBlanca)) {
                     bolaAux1.descolisionar(bolaBlanca);
                 }
             }
+             */
             // Una vez la bola tenga una posicion adecuada, se agrega al deposito
             depositoBolas.addBola(bolaAux1);
         }
@@ -176,14 +191,12 @@ public class Jugar {
                     // caso 3er cuadrante
                     if (taco.getX1() >= taco.getX2() && taco.getY1() <= taco.getY2()) {
                         System.out.println("tercer cuadrante");
-
                         bolaBlanca.vx = taco.magnitudX() / 10;
                         bolaBlanca.vy = -(taco.magnitudY() / 10);
                     } else {
                         // caso 4to cuadrante
                         if (taco.getX1() <= taco.getX2() && taco.getY1() <= taco.getY2()) {
                             System.out.println("cuarto cuadrante");
-
                             bolaBlanca.vx = -(taco.magnitudX() / 10);
                             bolaBlanca.vy = -(taco.magnitudY() / 10);
                         }

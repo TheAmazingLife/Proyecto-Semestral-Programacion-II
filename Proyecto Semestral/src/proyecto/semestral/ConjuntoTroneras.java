@@ -1,5 +1,6 @@
 package proyecto.semestral;
 
+import geometricas.Angular;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -51,8 +52,8 @@ public class ConjuntoTroneras {
      * de las seis troneras de la mesa
      *
      * Las bolas entroneradas correspondan a las que: caben completamente dentro
-     * de las troneras, o bien, las que poseen mas de la mitad de su radio mas
-     * un cuarto del radio dentro de la tronera
+     * de las troneras, o bien, las que poseen una distancia euclidiana desde su
+     * centro hasta el centro de la tronera que sea menor al radio de la bola
      *
      * @param bola: bola a verificar
      */
@@ -64,6 +65,20 @@ public class ConjuntoTroneras {
         int tipoBola = 0;
 
         for (int i = 0; i < conjuntoTroneras.size(); i++) {
+            int centroBolaX = (int) (bola.x + bola.radio);
+            int centroBolaY = (int) (bola.y + bola.radio);
+            int centroTroneraX = (int) (conjuntoTroneras.get(i).getX() + conjuntoTroneras.get(i).getRadio());
+            int centroTroneraY = (int) (conjuntoTroneras.get(i).getY() + conjuntoTroneras.get(i).getRadio());
+            if (Angular.distEntre2Puntos(centroBolaX, centroBolaY, centroTroneraX, centroTroneraY) < 2 * bola.radio) {
+                if ("class proyecto.semestral.BolaBlanca".equals(bola.getClass() + "")) {
+                    System.out.println("BOLA BLANCAA");
+                    tipoBola = 2;
+                } else {
+                    tipoBola = 1;
+                }
+            }
+
+            /*
             if (i < 3) {
                 if (bola.getX() + bola.getRadio() + bola.getRadio() / 3 >= conjuntoTroneras.get(i).getX()
                         && bola.getX() + bola.getRadio() + bola.getRadio() / 3 <= conjuntoTroneras.get(i).getX() + 2 * conjuntoTroneras.get(i).getRadio()
@@ -89,7 +104,7 @@ public class ConjuntoTroneras {
                     }
                 }
 
-            }
+            }*/
         }
         return tipoBola;
     }
