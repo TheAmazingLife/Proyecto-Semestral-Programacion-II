@@ -29,7 +29,7 @@
 ## Diagrama de casos de uso
 
 <p align = "center">
-  <img src = "https://github.com/TheAmazingLife/Proyecto-Semestral-Programacion-II/blob/main/assets/UML.jpeg" />
+  <img src = "https://github.com/TheAmazingLife/Proyecto-Semestral-Programacion-II/blob/main/assets/Diagrama_casos_de_uso.jpeg" />
 </p>
 
 ## Lista y justificación de los patrones utilizados
