@@ -69,7 +69,7 @@ public class Jugar {
     public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
             BolaColor bolaAux1 = new BolaColor((int) (Math.random() * (1280 - 200) + 100), (int) (Math.random() * (640 - 200) + 100), radio);
-
+            System.out.println("Soy de color" + bolaAux1.getColor());
             // no permitir que aparezca "una bola encima de otra"
             for (int j = 0; j < depositoBolas.size(); j++) {
 
