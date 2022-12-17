@@ -54,7 +54,12 @@ public class DepositoBolas {
     public int size() {
         return depositoBolas.size();
     }
-    
+    /**
+     * Método que se usa para verificar que no hayan bolas de color sobrepuestas.
+     * @param depositoBolas: deposito de bolas las cuales se verificarán.
+     * @param radio: radio de las bolas.
+     * @return true cuando logra reacomodar todas las bolas.
+     */
     public boolean verificarPosBolas(DepositoBolas depositoBolas, float radio){
         for (int i = 0; i < depositoBolas.size(); i++) {
             int centroBolaAux1X = (int) (depositoBolas.get(i).x + depositoBolas.get(i).radio);

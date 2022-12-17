@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
+
 package proyecto.semestral;
 
-import java.awt.Graphics;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.jupiter.api.Assertions;
 
 /**
- *
- * @author Pablo Sanhueza
+ * Test unitario utilizado para comprobar el funcionamiento de las troneras.
+ * Se crean las 6 troneras y 16 bolas. 6 bolas están dentro de cada tronera, otras
+ * 6 están mayormente dentro, otras 3 están totalmente fuera y la bola blanca está
+ * dentro de una tronera. Luego de esto, se chequea si se generá la adecuada 
+ * asignación de puntaje y eliminación de cada bola que deba ser eliminada.
+ * 
  */
 public class ConjuntoTronerasTest {
 

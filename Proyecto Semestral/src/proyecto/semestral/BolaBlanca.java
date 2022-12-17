@@ -21,7 +21,13 @@ public class BolaBlanca extends Bola {
     public BolaBlanca(float x, float y, float radio) {
         super(x, y, radio, Color.white);
     }
-
+    /**
+     * Método para asegurarse que la bola blanca no esté sobrepuesta con una bola
+     * de color.
+     * @param depositoBolas: deposito de las bolas de color que se comprobarán.
+     * @param radio: radio de las bolas.
+     * @return true cuando logra reacomodar las bolas
+     */
     public boolean verificarPosBolaBlanca(DepositoBolas depositoBolas, float radio){
         for (int i = 0; i < depositoBolas.size(); i++) {
             int centroBolaAux2X = (int) (this.x + this.radio);
