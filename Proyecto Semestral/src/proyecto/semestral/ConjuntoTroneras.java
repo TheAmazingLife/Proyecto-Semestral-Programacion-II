@@ -77,34 +77,6 @@ public class ConjuntoTroneras {
                     tipoBola = 1;
                 }
             }
-
-            /*
-            if (i < 3) {
-                if (bola.getX() + bola.getRadio() + bola.getRadio() / 3 >= conjuntoTroneras.get(i).getX()
-                        && bola.getX() + bola.getRadio() + bola.getRadio() / 3 <= conjuntoTroneras.get(i).getX() + 2 * conjuntoTroneras.get(i).getRadio()
-                        && bola.getY() + 2 * bola.getRadio() <= conjuntoTroneras.get(i).getY() + 2 * conjuntoTroneras.get(i).getRadio()) {
-                    System.out.println("ENTRONERA ARRIBA" + " " + bola.getClass());
-                    if ("class proyecto.semestral.BolaBlanca".equals(bola.getClass() + "")) {
-                        System.out.println("BOLA BLANCAA");
-                        tipoBola = 2;
-                    } else {
-                        tipoBola = 1;
-                    }
-                }
-            } else {
-                if (bola.getX() >= conjuntoTroneras.get(i).getX()
-                        && bola.getX() + bola.getRadio() + bola.getRadio() / 3 <= conjuntoTroneras.get(i).getX() + 2 * conjuntoTroneras.get(i).getRadio()
-                        && bola.getY() + bola.getRadio() + bola.getRadio() / 3 >= conjuntoTroneras.get(i).getY()) {
-                    System.out.println("ENTRONERA ABAJO");
-                    if ("class proyecto.semestral.BolaBlanca".equals(bola.getClass() + "")) {
-                        System.out.println("BOLA BLANCA");
-                        tipoBola = 2;
-                    } else {
-                        tipoBola = 1;
-                    }
-                }
-
-            }*/
         }
         return tipoBola;
     }

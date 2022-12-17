@@ -100,15 +100,6 @@ public class Jugar {
         }
     }
 
-    public void verificarPosBolas() {
-        for (int i = 0; i < depositoBolas.size(); i++) {
-            for (int j = 1; j < depositoBolas.size() - 1; j++) {
-                if (!depositoBolas.get(i).bienPosicionado(depositoBolas.get(j))) {
-                    depositoBolas.get(i).descolisionar(depositoBolas.get(j));
-                }
-            }
-        }
-    }
 
     /**
      * Son las opciones que tiene el usuario para realizar Estas son: Cambiar el

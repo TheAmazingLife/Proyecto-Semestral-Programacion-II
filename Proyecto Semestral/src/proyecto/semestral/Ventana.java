@@ -3,7 +3,11 @@ package proyecto.semestral;
 import java.awt.BorderLayout;
 import java.awt.event.*;
 import javax.swing.*;
-
+/**
+ * Ventana que se usa durante todo el código, se van cambiando sus parametros entre
+ * el menu inicial y la mesa
+ * 
+ */
 public class Ventana extends JFrame implements KeyListener {
 
     private PanelPrincipal panel1;

@@ -2,12 +2,21 @@ package proyecto.semestral;
 
 import java.awt.event.*;
 import javax.swing.*;
-
+/**
+ * Menu donde se decidirá la cantidad de bolas
+ * 
+ */
 public class MenuInicial extends JFrame {
 
     private JPanel panel;
     private Ventana v;
-
+    /**
+     * Constructor que generará el Menu incial.
+     * Se creará la ventada con sus caracteristicas, aparecen las instrucciones
+     * y se activan 6 botones para seleccionar la cantidad de bolas para la partida
+     * @param ventana: La ventana que se uasará para el Menu
+     * @param numBolas: El holder que se determinará al clickear alguno de los botones
+     */
     public MenuInicial(Ventana ventana, HolderNumBolas numBolas) {
         v = ventana;
         crearMenu();
@@ -65,7 +74,7 @@ public class MenuInicial extends JFrame {
         ActionListener oyente4 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                numBolas.setNumeroBolas(4);
+                numBolas.setNumeroBolas(1);
                 v.actualizarBolas();
                 setVisible(false);
                 v.setVisible(true);

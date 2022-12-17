@@ -41,9 +41,7 @@ public class DepositoBolas {
      * Elimina la bola del depositoBolas
      */
     public void eliminarBola(Bola bola) {
-
             depositoBolas.remove(depositoBolas.indexOf(bola));
-        
     }
 
     /**

@@ -1,14 +1,23 @@
+
 package proyecto.semestral;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+/**
+ * En este panel ocurrira todo el juego de pool en si.
+ * 
+ */
 public class PanelPrincipal extends JPanel implements ActionListener {
 
     public Jugar jugar;
     private int posX, posY;
-
+    /**
+     * Se crea el panel con sus caracteristicas y comienza a transcurrir el juego 
+     * @param numBolas: El holder que se pasará a "jugar" que permitira determinar
+     * la cantidad de bolas que se usarán en la partida
+     * @param score: El holder que se pasará a "jugar" e irá guardando el puntaje
+     */
     public PanelPrincipal(HolderNumBolas numBolas, HolderScore score) {
         super();
         setXY(0, 0);
