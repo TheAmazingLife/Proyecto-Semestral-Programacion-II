@@ -68,47 +68,67 @@ public class Jugar {
      */
     public void inciarBolas() {
         for (int i = 0; i < numeroInicialBolas; i++) {
-            BolaColor bolaAux1 = new BolaColor((int) (Math.random() * (1280 - 200) + 100), (int) (Math.random() * (640 - 200) + 100), radio);
-            System.out.println("Soy de color" + bolaAux1.getColor());
-            // no permitir que aparezca "una bola encima de otra"
-            for (int j = 0; j < depositoBolas.size(); j++) {
-
-                BolaColor bolaAux2 = (BolaColor) depositoBolas.get(j);
-
-                int centroBolaAux1X = (int) (bolaAux1.x + bolaAux1.radio);
-                int centroBolaAux1Y = (int) (bolaAux1.y + bolaAux1.radio);
-                int centroBolaAux2X = (int) (bolaAux2.x + bolaAux2.radio);
-                int centroBolaAux2Y = (int) (bolaAux2.y + bolaAux2.radio);
-
-                //System.out.println(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y));
-                if (Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio) {
-                    bolaAux1.descolisionar(bolaAux2);
-                    j = -1;
-                }
-                centroBolaAux1X = (int) (bolaAux1.x + bolaAux1.radio);
-                centroBolaAux1Y = (int) (bolaAux1.y + bolaAux1.radio);
-                centroBolaAux2X = (int) (bolaBlanca.getCentro().getX() + bolaBlanca.getRadio());
-                centroBolaAux2Y = (int) (bolaBlanca.getCentro().getY() + bolaBlanca.getRadio());
-                if (Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio) {
-                    bolaAux1.descolisionar(bolaBlanca);
-                }
-            }
-            /*
-                if (bolaAux1 != bolaAux2) {
-                    if (!bolaAux1.bienPosicionado(bolaAux2)) {
-                        System.out.println("PROBLEMAS");
-                        bolaAux1.descolisionar(bolaAux2);
-                        j = -1;
+            BolaColor bola = new BolaColor((int) (Math.random() * (1280 - 200) + 100), (int) (Math.random() * (640 - 200) + 100), radio);
+            depositoBolas.addBola(bola);
+            System.out.println("Soy de color" + depositoBolas.get(i).getColor());
+        }
+        System.out.println("Stop\n.\n");
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            int centroBolaAux1X = (int) (depositoBolas.get(i).x + depositoBolas.get(i).radio);
+            int centroBolaAux1Y = (int) (depositoBolas.get(i).y + depositoBolas.get(i).radio);
+            for (int j = 0; j < depositoBolas.size(); j++){
+                if(i!=j){
+                    int centroBolaAux2X = (int) (depositoBolas.get(j).x + depositoBolas.get(j).radio);
+                    int centroBolaAux2Y = (int) (depositoBolas.get(j).y + depositoBolas.get(j).radio);
+                    if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio){
+                        depositoBolas.get(i).descolisionar(depositoBolas.get(j));
+                        j=100;
+                        i=-1;
                     }
                 }
-                if (!bolaAux1.bienPosicionado(bolaBlanca)) {
-                    bolaAux1.descolisionar(bolaBlanca);
-                }
             }
-             */
-            // Una vez la bola tenga una posicion adecuada, se agrega al deposito
-            depositoBolas.addBola(bolaAux1);
         }
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            int centroBolaAux2X = (int) (bolaBlanca.x + bolaBlanca.radio);
+            int centroBolaAux2Y = (int) (bolaBlanca.y + bolaBlanca.radio);
+            int centroBolaAux1X = (int) (depositoBolas.get(i).x + depositoBolas.get(i).radio);
+            int centroBolaAux1Y = (int) (depositoBolas.get(i).y + depositoBolas.get(i).radio);
+            if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio){
+                depositoBolas.get(i).descolisionar(bolaBlanca);
+                i=-1;
+            }
+        }
+        /*boolean aux=false;
+        BolaColor bolaBool = new BolaColor(0,0,0);
+        BolaColor bolaAux1 = new BolaColor((int) (Math.random() * (1280 - 200) + 100), (int) (Math.random() * (640 - 200) + 100), radio);
+        depositoBolas.addBola(bolaAux1);
+        int centroBolaAux1X = (int) (bolaAux1.x + bolaAux1.radio);
+        int centroBolaAux1Y = (int) (bolaAux1.y + bolaAux1.radio);
+        for (int i = 0; i < numeroInicialBolas; i++) {
+            BolaColor bolaAux2 = new BolaColor((int) (Math.random() * (1280 - 200) + 100), (int) (Math.random() * (640 - 200) + 100), radio);
+            int centroBolaAux2X = (int) (bolaAux2.x + bolaAux2.radio);
+            int centroBolaAux2Y = (int) (bolaAux2.y + bolaAux2.radio);
+            if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio){
+                while(aux==false){
+                bolaAux1.descolisionar(bolaBool);
+                int centroBolaBoolX= (int) (bolaBool.x + bolaBool.radio);
+                int centroBolaBoolY= (int) (bolaBool.y + bolaBool.radio);
+                    for (int j = 0; j < depositoBolas.size(); j++) {
+                        if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaBoolX, centroBolaBoolY) < 2 * radio){
+                            j=+100;
+                        }
+                        if(j==depositoBolas.size() && Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaBoolX, centroBolaBoolY) > 2 * radio){
+                            aux=true;
+                            bolaAux2.setX(bolaBool.getX());
+                            bolaAux2.setY(bolaBool.getY());
+                        }
+                    }
+                }
+            }else{
+                depositoBolas.addBola(bolaAux2);
+            }
+            System.out.println("Soy de color" + depositoBolas.get(i).getColor());
+        }*/
     }
 
     public void verificarPosBolas() {

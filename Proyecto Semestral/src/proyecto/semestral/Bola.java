@@ -172,12 +172,10 @@ abstract class Bola {
      *
      * @param b2: bola con la cual se separa
      */
-    public void descolisionar(Bola b2) {
+    public void descolisionar(Bola b2 ) {
         b2.setX((int) (Math.random() * (1280 - 200) + 100));
         b2.setY((int) (Math.random() * (640 - 200) + 100));
-
-        setX((int) (Math.random() * (1280 - 200) + 100));
-        setY((int) (Math.random() * (640 - 200) + 100));
+            
     }
 
     /**

@@ -25,8 +25,8 @@ public class MenuInicial extends JFrame {
         JButton opcion21 = new JButton();
 
         panel.add(instrucciones);
-        instrucciones.setText("<html>Bienvenido a la mesa de pool. Los controles del juego son los siguientes:<p>- Con la flecha izquierda y derecha cambias el ángulo del taco.<p>- Con la tecla espacio golpeas la bola blanca.<p>- El juego finaliza cuando todas las bolas de colores entraron<p> en las troneras.<p>En todo momento, podrás ver tu puntaje, cuantas bolas has metido<p> en las troneras y tendrás acceso al botón reset, el cual hará que el<p> juego vuelva a comenzar.<html>");
-        instrucciones.setBounds(50, 50, 700, 150);
+        instrucciones.setText("<html>Bienvenido a la mesa de pool. Los controles del juego son los<p> siguientes:<p>- Con la flecha izquierda y derecha cambias el ángulo del taco.<p>- Con la tecla espacio golpeas la bola blanca.<p>- El juego finaliza cuando todas las bolas de colores entraron<p> en las troneras.<p>En todo momento, podrás ver tu puntaje, cuantas bolas has metido<p> en las troneras y tendrás acceso al botón reset, el cual hará que el<p> juego vuelva a comenzar.<html>");
+        instrucciones.setBounds(0, 0, 700, 150);
 
         panel.add(consulta);
         consulta.setText("¿Con cuántas bolas quieres jugar?");
