@@ -73,31 +73,8 @@ public class Jugar {
             depositoBolas.addBola(bola);
             System.out.println("Soy de color" + depositoBolas.get(i).getColor());
         }
-        for (int i = 0; i < depositoBolas.size(); i++) {
-            int centroBolaAux1X = (int) (depositoBolas.get(i).x + depositoBolas.get(i).radio);
-            int centroBolaAux1Y = (int) (depositoBolas.get(i).y + depositoBolas.get(i).radio);
-            for (int j = 0; j < depositoBolas.size(); j++){
-                if(i!=j){
-                    int centroBolaAux2X = (int) (depositoBolas.get(j).x + depositoBolas.get(j).radio);
-                    int centroBolaAux2Y = (int) (depositoBolas.get(j).y + depositoBolas.get(j).radio);
-                    if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio){
-                        depositoBolas.get(i).descolisionar(depositoBolas.get(j));
-                        j=100;
-                        i=-1;
-                    }
-                }
-            }
-        }
-        for (int i = 0; i < depositoBolas.size(); i++) {
-            int centroBolaAux2X = (int) (bolaBlanca.x + bolaBlanca.radio);
-            int centroBolaAux2Y = (int) (bolaBlanca.y + bolaBlanca.radio);
-            int centroBolaAux1X = (int) (depositoBolas.get(i).x + depositoBolas.get(i).radio);
-            int centroBolaAux1Y = (int) (depositoBolas.get(i).y + depositoBolas.get(i).radio);
-            if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio){
-                depositoBolas.get(i).descolisionar(bolaBlanca);
-                i=-1;
-            }
-        }
+        depositoBolas.verificarPosBolas(depositoBolas, radio);
+        bolaBlanca.verificarPosBolaBlanca(depositoBolas, radio);
     }
 
 

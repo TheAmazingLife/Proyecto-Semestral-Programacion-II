@@ -1,5 +1,6 @@
 package proyecto.semestral;
 
+import geometricas.Angular;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -53,7 +54,26 @@ public class DepositoBolas {
     public int size() {
         return depositoBolas.size();
     }
-
+    
+    public boolean verificarPosBolas(DepositoBolas depositoBolas, float radio){
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            int centroBolaAux1X = (int) (depositoBolas.get(i).x + depositoBolas.get(i).radio);
+            int centroBolaAux1Y = (int) (depositoBolas.get(i).y + depositoBolas.get(i).radio);
+            for (int j = 0; j < depositoBolas.size(); j++){
+                if(i!=j){
+                    int centroBolaAux2X = (int) (depositoBolas.get(j).x + depositoBolas.get(j).radio);
+                    int centroBolaAux2Y = (int) (depositoBolas.get(j).y + depositoBolas.get(j).radio);
+                    if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio){
+                        depositoBolas.get(i).descolisionar(depositoBolas.get(j));
+                        j=100;
+                        i=-1;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
     /**
      * Pinta todas las bolas existentes en el depositoBolas
      *

@@ -1,5 +1,6 @@
 package proyecto.semestral;
 
+import geometricas.Angular;
 import java.awt.Color;
 import java.awt.Point;
 
@@ -21,6 +22,20 @@ public class BolaBlanca extends Bola {
         super(x, y, radio, Color.white);
     }
 
+    public boolean verificarPosBolaBlanca(DepositoBolas depositoBolas, float radio){
+        for (int i = 0; i < depositoBolas.size(); i++) {
+            int centroBolaAux2X = (int) (this.x + this.radio);
+            int centroBolaAux2Y = (int) (this.y + this.radio);
+            int centroBolaAux1X = (int) (depositoBolas.get(i).x + depositoBolas.get(i).radio);
+            int centroBolaAux1Y = (int) (depositoBolas.get(i).y + depositoBolas.get(i).radio);
+            if(Angular.distEntre2Puntos(centroBolaAux1X, centroBolaAux1Y, centroBolaAux2X, centroBolaAux2Y) < 2 * radio){
+                depositoBolas.get(i).descolisionar(this);
+                i=-1;
+            }
+        } 
+        return true;
+    }
+    
     /**
      * Retorna la posicion central de la bola
      *
