@@ -9,7 +9,7 @@
   - [Captura de pantalla de la interfaz](#captura-de-pantalla-de-la-interfaz)
   - [Decisiones de desarrollo](#decisiones-de-desarrollo)
   - [Problemas de desarollo](#problemas-de-desarollo)
-  - [Explicación commits extras Luciano Argomedo](#explicación commits extras Luciano Argomedo)
+  - [Explicación commits extras Luciano Argomedo](#explicación-commits-extras-Luciano-Argomedo)
 
 ## Grupo Nro. 3
 
