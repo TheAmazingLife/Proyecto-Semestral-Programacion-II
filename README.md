@@ -9,6 +9,7 @@
   - [Captura de pantalla de la interfaz](#captura-de-pantalla-de-la-interfaz)
   - [Decisiones de desarrollo](#decisiones-de-desarrollo)
   - [Problemas de desarollo](#problemas-de-desarollo)
+  - [Explicación commits extras Luciano Argomedo](#explicación commits extras Luciano Argomedo)
 
 ## Grupo Nro. 3
 
@@ -58,3 +59,7 @@ En el transcurso del desarrollo evidenciamos fortalezas y debilidades, las cuale
 - **Dificultad de desarrollo** Debido a la escazes de tiempo como equipo nos hemos visto en una inmensa dificultad al momento de desarrollar, ya que al no tener un rango de trabajo muy extenso, y debido a especialmente a nuestra inexpertiz en el desarollo de este tipo de applicaciones, la puesta en marcha de ideas planteadas, de tareas de Split, etc, se vio un incremento considerable de tiempo, tiempo el cual es un recurso muy preciado en el desarollo de un proyeto como fue este.
 
 Gracias a este trabajo, hemos podido adquirir habilidades como el desarollo de problemas complejos, el trabajo en equipo mediante a delegacion de tareas y mucho contenido antes no estudiado, podiendo aprenderlo en la practica, al poner el proyecto en marcha.
+
+## Explicación commits extras Luciano Argomedo
+
+Dentro del trabajo realizado, se trabajo en la solución de dos bugs importantes, los cuales no permitian meter todas las bolas en las troneras y problemas en la posición de las bolas al momento de generarlas. Se creo un nuevo test unitario que comprueba el buen posicionamiento de las bolas. Se agrego un pequeño nuevo modo de práctica en el que se usa el patrón Holder para confirmar que se ha seleccionado este modo de juego. Y finalmente, se ha agregado documentación en partes del codigo que no tenian, se ha corregido unas cuantas por los errores corregidos y se ha creado también para la nueva función.
