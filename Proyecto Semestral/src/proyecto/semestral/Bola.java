@@ -13,7 +13,7 @@ abstract class Bola {
     private Color color;
     protected float x, y;
     protected float radio;
-    private final float friccion;
+    protected final float friccion;
     public float vx, vy;
     private float masa;
 

@@ -176,7 +176,12 @@ public class Jugar {
             Bola.colisionar(bolaBlanca, depositoBolas.get(i));
             depositoBolas.get(i).mover();
             if (conjuntoTroneras.verificarTroneras(depositoBolas.get(i)) == 1) {
-                depositoBolas.eliminarBola(depositoBolas.get(i));
+                if(numeroInicialBolas==1){
+                    depositoBolas.get(0).vx=(float) 0.0001;
+                    depositoBolas.get(0).vy=(float) 0.0001;
+                    depositoBolas.eliminarBola(depositoBolas.get(i), numeroInicialBolas);
+                }
+                depositoBolas.eliminarBola(depositoBolas.get(i), numeroInicialBolas);
                 if (conjuntoTroneras.verificarTroneras(bolaBlanca) != 2) {
                     modificarPuntaje(1);
                 } else {

@@ -39,10 +39,14 @@ public class DepositoBolas {
 
     // TODO: eliminar bola del arreglo
     /**
-     * Elimina la bola del depositoBolas
+     * Elimina la bola del depositoBolas, si se está en modo practica, solo la reubica
      */
-    public void eliminarBola(Bola bola) {
-            depositoBolas.remove(depositoBolas.indexOf(bola));
+    public void eliminarBola(Bola bola, int i) {
+            if(i==1){
+                bola.descolisionar(bola);
+            }else{
+                depositoBolas.remove(depositoBolas.indexOf(bola));
+            }
     }
 
     /**
